@@ -3062,14 +3062,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 422613163}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.28743702, y: -0.28034917, z: 0.088399425, w: 0.9115755}
-  m_LocalPosition: {x: 22.3, y: 16.7, z: -24.6}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.38921267, y: 0.1834285, z: -0.07939579, w: 0.8992018}
+  m_LocalPosition: {x: -4.28, y: 12.5, z: -13.32}
+  m_LocalScale: {x: 0.44741744, y: 0.44741738, z: 0.44741744}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 699859672}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 35.002, y: -34.19, z: 0}
+  m_Father: {fileID: 793184548}
+  m_LocalEulerAnglesHint: {x: 46.81, y: 23.059, z: 0}
 --- !u!114 &422613167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3126,24 +3126,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9925d38f26558834582057e80b50cd1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1898620758214900311}
-  baseDistance: 25
-  distanceVariation: 2
-  distanceSmoothSpeed: 1.5
-  lookOffset: {x: 0, y: 1.5, z: 0}
-  maxOrbitExpansion: 3
-  expansionSmoothSpeed: 1.5
-  minX: 70
-  maxX: 94
-  xSmoothSpeed: 0.69
-  baseYSpeed: 15
-  yVariation: 10
-  noiseSpeed: 0.5
-  waveAmplitude: 5
-  waveFrequency: 0.5
-  approachChance: 0.3
-  approachStrength: 2
-  approachDuration: 2
+  target: {fileID: 793184548}
+  baseDistance: 45
+  distanceVariation: 0
+  distanceSmoothSpeed: 0
+  lookOffset: {x: 38, y: -45, z: 0}
+  maxOrbitExpansion: 30
+  expansionSmoothSpeed: 0
+  minX: 15
+  maxX: 15
+  xSmoothSpeed: 0
+  baseYSpeed: 0
+  yVariation: 0
+  noiseSpeed: 0
+  waveAmplitude: 0
+  waveFrequency: 0
+  approachChance: 0
+  approachStrength: 0
+  approachDuration: 20
 --- !u!114 &422613169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3151,7 +3151,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 422613163}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9a234651f78743408821c2b7a756d01, type: 3}
   m_Name: 
@@ -10559,6 +10559,7 @@ GameObject:
   - component: {fileID: 793184546}
   - component: {fileID: 793184545}
   - component: {fileID: 793184549}
+  - component: {fileID: 793184550}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -10654,7 +10655,8 @@ Transform:
   m_LocalPosition: {x: 4.7899585, y: 2.24, z: -18.54}
   m_LocalScale: {x: 2.2350492, y: 2.2350492, z: 2.2350492}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 422613166}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -50.753, z: 0}
 --- !u!143 &793184549
@@ -10673,7 +10675,7 @@ CharacterController:
     m_Bits: 0
   m_LayerOverridePriority: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Height: 2
   m_Radius: 0.5000001
@@ -10682,6 +10684,19 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &793184550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 793184544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0140025389617f4a96ff234a034ea26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 7.86
 --- !u!1001 &800546516
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21934,7 +21949,6 @@ MeshFilter:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 422613166}
   - {fileID: 41481234}
   - {fileID: 908992387}
   - {fileID: 596459458}
