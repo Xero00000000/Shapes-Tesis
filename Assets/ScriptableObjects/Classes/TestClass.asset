@@ -21,3 +21,4 @@ MonoBehaviour:
   primaryAttack: {fileID: 11400000, guid: e20eaa68c3ab8da46aa6510c71f3d34d, type: 2}
   secondaryAttack: {fileID: 11400000, guid: e20eaa68c3ab8da46aa6510c71f3d34d, type: 2}
   testStat: 0
+  testPart: {fileID: 0}

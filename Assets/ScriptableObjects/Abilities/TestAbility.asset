@@ -14,9 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   label: TestAbility
   effects:
+  - rid: 130289227835375683
   - rid: -2
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 130289227835375683
+      type: {class: Damage, ns: , asm: Assembly-CSharp}
+      data:
+        damageValue: 0

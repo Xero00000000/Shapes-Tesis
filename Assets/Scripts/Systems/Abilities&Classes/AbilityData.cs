@@ -16,16 +16,18 @@ class ClassData : ScriptableObject
 
     [SerializeField] int testStat;
 
+    [SerializeField] GameObject testPart;
+
     void OnEnable()
     {
         if (string.IsNullOrEmpty(label)) label = name;
-        if (passiveAbility == null) passiveAbility = new AbilityData();
-        if (headAbility == null) headAbility = new AbilityData();
-        if (armsAbility == null) armsAbility = new AbilityData();
-        if (torsoAbility == null) torsoAbility = new AbilityData();
-        if (legsAbility == null) legsAbility = new AbilityData();
-        if (primaryAttack == null) primaryAttack = new AbilityData();
-        if (secondaryAttack == null) secondaryAttack = new AbilityData();
+        if (passiveAbility == null) passiveAbility = (AbilityData)ScriptableObject.CreateInstance(typeof(AbilityData));
+        if (headAbility == null) headAbility = (AbilityData)ScriptableObject.CreateInstance(typeof(AbilityData));
+        if (armsAbility == null) armsAbility = (AbilityData)ScriptableObject.CreateInstance(typeof(AbilityData));
+        if (torsoAbility == null) torsoAbility = (AbilityData)ScriptableObject.CreateInstance(typeof(AbilityData));
+        if (legsAbility == null) legsAbility = (AbilityData)ScriptableObject.CreateInstance(typeof(AbilityData));
+        if (primaryAttack == null) primaryAttack = (AbilityData)ScriptableObject.CreateInstance(typeof(AbilityData));
+        if (secondaryAttack == null) secondaryAttack = (AbilityData)ScriptableObject.CreateInstance(typeof(AbilityData));
     }
 }
 
@@ -45,4 +47,15 @@ class AbilityData : ScriptableObject
 [Serializable] abstract class AbilityEffect
 {
     public abstract void Execute();
+}
+
+class Damage : AbilityEffect
+{
+    [SerializeField] float damageValue;
+
+    public override void Execute()
+    {
+
+    }
+
 }
