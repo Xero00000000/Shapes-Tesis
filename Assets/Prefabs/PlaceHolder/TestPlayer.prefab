@@ -205,7 +205,7 @@ GameObject:
   - component: {fileID: 6974422901551060530}
   m_Layer: 0
   m_Name: TestPlayer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -252,10 +252,10 @@ MonoBehaviour:
   legs: {fileID: 11400000, guid: 6fad6d4739df15441a8dc26209ebba9b, type: 2}
   weapon: {fileID: 11400000, guid: 6fad6d4739df15441a8dc26209ebba9b, type: 2}
   headOffset: {fileID: 7288582827545990049}
-  rightArmOffset: {fileID: 6244647659601070490}
-  leftArmOffset: {fileID: 3852227731412987995}
-  rightLegOffset: {fileID: 7104609582149047717}
-  leftLegOffset: {fileID: 1092149694129167777}
+  rightArmOffset: {fileID: 7104609582149047717}
+  leftArmOffset: {fileID: 6244647659601070490}
+  rightLegOffset: {fileID: 1092149694129167777}
+  leftLegOffset: {fileID: 3852227731412987995}
 --- !u!114 &4704928567599130993
 MonoBehaviour:
   m_ObjectHideFlags: 0

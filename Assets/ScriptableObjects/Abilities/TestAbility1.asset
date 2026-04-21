@@ -13,7 +13,12 @@ MonoBehaviour:
   m_Name: TestAbility1
   m_EditorClassIdentifier: 
   label: TestAbility1
-  effects: []
+  effects:
+  - rid: 265759045747474501
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 265759045747474501
+      type: {class: TestEffect, ns: , asm: Assembly-CSharp}
+      data:
+        player: {fileID: 0}

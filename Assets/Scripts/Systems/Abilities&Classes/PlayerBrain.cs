@@ -43,6 +43,59 @@ class PlayerBrain : MonoBehaviour
         currentLeftLeg = Instantiate(legs.classLeftLeg, leftLegOffset.gameObject.transform);
     }
 
+    public void Execute(ClassData classAbility, int partAbility)
+    {
+        switch (partAbility)
+        {
+            case 1:
+                foreach (var effects in classAbility.headAbility.effects)
+                    effects.Execute();
+                break;
+            case 2:
+                foreach (var effects in classAbility.torsoAbility.effects)
+                    effects.Execute();
+                break;
+            case 3:
+                foreach (var effects in classAbility.armsAbility.effects)
+                    effects.Execute();
+                break;
+            case 4:
+                foreach (var effects in classAbility.legsAbility.effects)
+                    effects.Execute();
+                break;
+            case 5:
+                foreach (var effects in classAbility.primaryAttack.effects)
+                    effects.Execute();
+                break;
+            case 6:
+                foreach (var effects in classAbility.secondaryAttack.effects)
+                    effects.Execute();
+                break;
+        }
+    }
+
+    //tambien temporal
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Execute(head, 1);
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Execute(torso, 2);
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Execute(arms, 3);
+        }
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            Execute(head, 4);
+        }
+
+    }
+
     /*
     public void SwapPart(object sender, params object[] data)
     {
