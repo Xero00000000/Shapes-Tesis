@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afe9acbdaafe3684bb1d2ed61874e2d6, type: 3}
+  m_Name: TestClass1
+  m_EditorClassIdentifier: 
+  label: TestClass1
+  passiveAbility: {fileID: 11400000, guid: e20eaa68c3ab8da46aa6510c71f3d34d, type: 2}
+  headAbility: {fileID: 11400000, guid: e20eaa68c3ab8da46aa6510c71f3d34d, type: 2}
+  armsAbility: {fileID: 11400000, guid: e20eaa68c3ab8da46aa6510c71f3d34d, type: 2}
+  torsoAbility: {fileID: 11400000, guid: a75ed21f028863940af86affcb658420, type: 2}
+  legsAbility: {fileID: 11400000, guid: e20eaa68c3ab8da46aa6510c71f3d34d, type: 2}
+  primaryAttack: {fileID: 11400000, guid: a75ed21f028863940af86affcb658420, type: 2}
+  secondaryAttack: {fileID: 11400000, guid: e20eaa68c3ab8da46aa6510c71f3d34d, type: 2}
+  hpModifier: 3
+  energy: 4
+  physicalDefense: 3
+  magicalDefense: 4
+  speed: 3
+  physicalAttack: 4
+  magicalAttack: 3
+  Dexterity: 4
+  classHead: {fileID: 5332811525777414335, guid: 8cd7a8fcca911f847a8bfc055be1d8fb, type: 3}
+  classTorso: {fileID: 5756455196419907503, guid: 0bd7703638a0a0b4fb60777758c6e298, type: 3}
+  classRightArm: {fileID: 8158115404177133924, guid: 629c34d2f45d297499fd7a22728f207b, type: 3}
+  classLeftArm: {fileID: 3991637742428364767, guid: 93c5c5128935882479528ea7ff142f13, type: 3}
+  classRightLeg: {fileID: 8065176717834290021, guid: ad376635cb143464294098149708c57a, type: 3}
+  classLeftLeg: {fileID: 6969784438486157845, guid: 3e92738bc35066b49aec0df7838f6245, type: 3}

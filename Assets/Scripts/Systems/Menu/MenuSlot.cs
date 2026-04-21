@@ -6,7 +6,7 @@ using PrimeTween;
 
 public class MenuSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    public void OnDrop(PointerEventData eventData)
+    public virtual void OnDrop(PointerEventData eventData)
     {//probablemente sea mejor usar parent constraint component para esto, asi no uso tantos ifs en MenuSlot, despues me fijo
         GameObject dropped = eventData.pointerDrag;
         DraggableItem draggableItem = dropped.GetComponent<DraggableItem>();

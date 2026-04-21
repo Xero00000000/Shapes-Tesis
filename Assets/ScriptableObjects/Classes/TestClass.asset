@@ -9,16 +9,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: afe9acbdaafe3684bb1d2ed61874e2d6, type: 3}
   m_Name: TestClass
-  m_EditorClassIdentifier: Assembly-CSharp::ClassData
+  m_EditorClassIdentifier: 
   label: TestClass
   passiveAbility: {fileID: 11400000, guid: e20eaa68c3ab8da46aa6510c71f3d34d, type: 2}
   headAbility: {fileID: 11400000, guid: e20eaa68c3ab8da46aa6510c71f3d34d, type: 2}
-  armsAbility: {fileID: 11400000, guid: e20eaa68c3ab8da46aa6510c71f3d34d, type: 2}
+  armsAbility: {fileID: 11400000, guid: a75ed21f028863940af86affcb658420, type: 2}
   torsoAbility: {fileID: 11400000, guid: e20eaa68c3ab8da46aa6510c71f3d34d, type: 2}
   legsAbility: {fileID: 11400000, guid: e20eaa68c3ab8da46aa6510c71f3d34d, type: 2}
   primaryAttack: {fileID: 11400000, guid: e20eaa68c3ab8da46aa6510c71f3d34d, type: 2}
-  secondaryAttack: {fileID: 11400000, guid: e20eaa68c3ab8da46aa6510c71f3d34d, type: 2}
-  testStat: 0
-  testPart: {fileID: 0}
+  secondaryAttack: {fileID: 11400000, guid: a75ed21f028863940af86affcb658420, type: 2}
+  hpModifier: 2
+  energy: 2
+  physicalDefense: 2
+  magicalDefense: 2
+  speed: 2
+  physicalAttack: 2
+  magicalAttack: 2
+  Dexterity: 2
+  classHead: {fileID: 3150686948720889484, guid: be0adf5a87b454a41944d4f252b16e36, type: 3}
+  classTorso: {fileID: 2033799254013694236, guid: ab058587669134b4a970064450bec345, type: 3}
+  classRightArm: {fileID: 3212693563533997043, guid: 72e3b20fe1e32fa4698f0ee7f8546ba0, type: 3}
+  classLeftArm: {fileID: 7401490499888536366, guid: 7c609e8762c1e2e40b66162e48ddab18, type: 3}
+  classRightLeg: {fileID: 6352011905431087049, guid: 4d65701b114cf4e49b7ddda12af65ca4, type: 3}
+  classLeftLeg: {fileID: 1045364114198378762, guid: c66f6fafc94397b49b45b90827995210, type: 3}

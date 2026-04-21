@@ -1,16 +1,31 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using PrimeTween;
 
 public class PartSlot : MenuSlot
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public override void OnDrop(PointerEventData eventData)
     {
-        
-    }
+        GameObject dropped = eventData.pointerDrag;
+        DraggablePart draggableItem = dropped.GetComponent<DraggablePart>();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        draggableItem.SwappingPart();
+
+        if (transform.childCount != 0)
+        {
+            GameObject current = transform.GetChild(0).gameObject;
+            DraggableItem currentDraggable = current.GetComponent<DraggableItem>();
+
+            currentDraggable.transform.SetParent(draggableItem.parentAfterDrag);
+        }
+
+        if (dropped.GetComponent<DraggableItem>() != null)
+        {
+            draggableItem.parentAfterDrag = transform;
+            Tween.Scale(transform, endValue: 1f, duration: 0.05f, ease: Ease.InOutQuad);
+            Tween.Scale(dropped.transform, endValue: 1f, duration: 0.05f, ease: Ease.InOutQuad);
+        }
     }
 }
