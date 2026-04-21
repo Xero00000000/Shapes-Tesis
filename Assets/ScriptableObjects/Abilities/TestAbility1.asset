@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   label: TestAbility1
   effects:
-  - rid: 265759045747474501
+  - rid: 265759045747474503
   references:
     version: 2
     RefIds:
-    - rid: 265759045747474501
-      type: {class: TestEffect, ns: , asm: Assembly-CSharp}
+    - rid: 265759045747474503
+      type: {class: TestEffectOne, ns: , asm: Assembly-CSharp}
       data:
         player: {fileID: 0}
