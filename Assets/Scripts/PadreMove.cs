@@ -3,26 +3,20 @@ using UnityEngine.InputSystem;
 
 public class PadreMove : MonoBehaviour
 {
-    public float speed = 5;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public CharacterController controller;
+    public float speed = 12f;
 
-    // Update is called once per frame
     void Update()
     {
-        transform.position += (Input.GetAxis("Horizontal") * Vector3.right) * speed * Time.deltaTime;
+        // Get WASD / Arrow Key input
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
 
-        transform.position += Input.GetAxis("Vertical") * Vector3.forward * speed * Time.deltaTime;
+        // Calculate direction relative to the player's orientation
+        Vector3 move = transform.right * x + transform.forward * z;
 
-
-    }
-
-    public void OnMove()
-    {
-
+        // Apply movement
+        controller.Move(move * speed * Time.deltaTime);
     }
 
 }

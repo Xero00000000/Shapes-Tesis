@@ -32,6 +32,17 @@ class PlayerBrain : MonoBehaviour
     private GameObject currentLeftLeg;
     //private GameObject currentWeapon;
 
+    //temporal
+    public void Start()
+    {
+        currentHead = Instantiate(head.classHead, headOffset.gameObject.transform);
+        currentTorso = Instantiate(torso.classTorso, this.gameObject.transform);
+        currentRightArm = Instantiate(arms.classRightArm, rightArmOffset.gameObject.transform);
+        currentLeftArm = Instantiate(arms.classLeftArm, leftArmOffset.gameObject.transform);
+        currentRightLeg = Instantiate(legs.classRightLeg, rightLegOffset.gameObject.transform);
+        currentLeftLeg = Instantiate(legs.classLeftLeg, leftLegOffset.gameObject.transform);
+    }
+
     /*
     public void SwapPart(object sender, params object[] data)
     {
