@@ -24,7 +24,7 @@ MonoBehaviour:
   energy: 2
   physicalDefense: 2
   magicalDefense: 2
-  speed: 2
+  speed: 3
   physicalAttack: 2
   magicalAttack: 2
   Dexterity: 2

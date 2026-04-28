@@ -4,72 +4,74 @@ using System.Collections;
 public class GoblinArcherAI : MonoBehaviour
 {
     [Header("Movement")]
-    [SerializeField] private float moveSpeed = 3f;
-    [SerializeField] private float detectionRange = 18f;
-    [SerializeField] private float preferredDistance = 12f;
-    [SerializeField] private float minDistance = 7f;
+    [SerializeField] private float speed = 3f;
+    [SerializeField] private float detectRange = 18f;
+    [SerializeField] private float idealDistance = 12f;
+    [SerializeField] private float tooCloseDistance = 7f;
 
     [Header("Rotation")]
-    [SerializeField] private float rotationSpeed = 10f;
+    [SerializeField] private float turnSpeed = 10f;
 
     [Header("Arrow Attack")]
     [SerializeField] private GameObject arrowPrefab;
-    [SerializeField] private Transform firePoint;
-    [SerializeField] private float arrowForce = 18f;
+    [SerializeField] private Transform shootPoint;
+    [SerializeField] private float arrowSpeed = 18f;
     [SerializeField] private int arrowDamage = 10;
-    [SerializeField] private float attackCooldown = 1.5f;
-    [SerializeField] private float aimTime = 0.4f;
+    [SerializeField] private float shootCooldown = 1.5f;
+    [SerializeField] private float aimDelay = 0.4f;
 
-    [Header("Close Push Attack")]
-    [SerializeField] private float pushTriggerDistance = 3f;
+    [Header("Push Attack")]
+    [SerializeField] private float pushRange = 3f;
     [SerializeField] private int pushDamage = 5;
-    [SerializeField] private float pushForce = 12f;
+    [SerializeField] private float pushStrength = 12f;
     [SerializeField] private float pushCooldown = 5f;
-    [SerializeField] private float pushWindUp = 0.5f;
+    [SerializeField] private float pushDelay = 0.5f;
 
-    [Header("Attack Feedback")]
-    [SerializeField] private Renderer goblinRenderer;
+    [Header("Visual")]
+    [SerializeField] private Renderer rend;
     [SerializeField] private Color normalColor = Color.white;
-    [SerializeField] private Color warningColor = Color.red;
+    [SerializeField] private Color alertColor = Color.red;
 
     private Transform player;
-    private float lastAttackTime;
-    private float lastPushTime;
-    private bool isShooting;
-    private bool isPushing;
 
-    private void Start()
+    private float lastShootTime;
+    private float lastPushTime;
+
+    private bool shooting;
+    private bool pushing;
+
+    void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
 
-        if (goblinRenderer != null)
-            normalColor = goblinRenderer.material.color;
+        if (rend != null)
+            normalColor = rend.material.color;
     }
 
-    private void Update()
+    void Update()
     {
         if (player == null) return;
 
-        float distance = Vector3.Distance(transform.position, player.position);
+        float dist = Vector3.Distance(transform.position, player.position);
 
-        if (distance > detectionRange) return;
+        if (dist > detectRange) return;
 
-        RotateTowardsPlayer();
+        LookAtPlayer();
 
-        if (isShooting || isPushing) return;
+        if (shooting || pushing) return;
 
-        if (distance <= pushTriggerDistance)
+        if (dist <= pushRange)
         {
-            TryPushPlayer();
-            MoveAwayFromPlayer();
+            TryPush();
+            MoveAway();
         }
-        else if (distance < minDistance)
+        else if (dist < tooCloseDistance)
         {
-            MoveAwayFromPlayer();
+            MoveAway();
         }
-        else if (distance > preferredDistance)
+        else if (dist > idealDistance)
         {
-            MoveTowardsPlayer();
+            MoveTowards();
         }
         else
         {
@@ -77,137 +79,124 @@ public class GoblinArcherAI : MonoBehaviour
         }
     }
 
-    private void MoveTowardsPlayer()
+    void MoveTowards()
     {
-        Vector3 dir = player.position - transform.position;
+        Vector3 dir = (player.position - transform.position).normalized;
         dir.y = 0f;
-        dir.Normalize();
-
-        transform.position += dir * moveSpeed * Time.deltaTime;
+        transform.position += dir * speed * Time.deltaTime;
     }
 
-    private void MoveAwayFromPlayer()
+    void MoveAway()
     {
-        Vector3 dir = transform.position - player.position;
+        Vector3 dir = (transform.position - player.position).normalized;
         dir.y = 0f;
-        dir.Normalize();
-
-        transform.position += dir * moveSpeed * Time.deltaTime;
+        transform.position += dir * speed * Time.deltaTime;
     }
 
-    private void RotateTowardsPlayer()
+    void LookAtPlayer()
     {
         Vector3 dir = player.position - transform.position;
         dir.y = 0f;
 
         if (dir.sqrMagnitude < 0.01f) return;
 
-        Quaternion targetRotation = Quaternion.LookRotation(dir);
+        Quaternion rot = Quaternion.LookRotation(dir);
 
         transform.rotation = Quaternion.Lerp(
             transform.rotation,
-            targetRotation,
-            rotationSpeed * Time.deltaTime
+            rot,
+            turnSpeed * Time.deltaTime
         );
     }
 
-    private void TryShoot()
+    void TryShoot()
     {
-        if (Time.time < lastAttackTime + attackCooldown) return;
+        if (Time.time < lastShootTime + shootCooldown) return;
 
-        StartCoroutine(ShootRoutine());
+        StartCoroutine(Shoot());
     }
 
-    private IEnumerator ShootRoutine()
+    IEnumerator Shoot()
     {
-        isShooting = true;
+        shooting = true;
 
-        yield return new WaitForSeconds(aimTime);
+        yield return new WaitForSeconds(aimDelay);
 
-        ShootArrow();
+        FireArrow();
 
-        lastAttackTime = Time.time;
-        isShooting = false;
+        lastShootTime = Time.time;
+        shooting = false;
     }
 
-    private void ShootArrow()
+    void FireArrow()
     {
-        if (arrowPrefab == null || firePoint == null)
+        if (arrowPrefab == null || shootPoint == null)
         {
-            Debug.LogWarning("Falta asignar Arrow Prefab o FirePoint");
+            Debug.LogWarning("Falta prefab o punto de disparo");
             return;
         }
 
-        Vector3 dir = player.position - firePoint.position;
+        Vector3 dir = (player.position - shootPoint.position).normalized;
         dir.y = 0f;
-        dir.Normalize();
 
         GameObject arrow = Instantiate(
             arrowPrefab,
-            firePoint.position,
+            shootPoint.position,
             Quaternion.LookRotation(dir)
         );
 
         Rigidbody rb = arrow.GetComponent<Rigidbody>();
 
         if (rb != null)
-        {
-            rb.linearVelocity = dir * arrowForce;
-        }
+            rb.linearVelocity = dir * arrowSpeed;
 
-        Projectile projectile = arrow.GetComponent<Projectile>();
+        Projectile proj = arrow.GetComponent<Projectile>();
 
-        if (projectile != null)
+        if (proj != null)
         {
-            projectile.SetDamage(arrowDamage);
-            projectile.SetOwner(gameObject);
+            proj.SetDamage(arrowDamage);
+            proj.SetOwner(gameObject);
         }
     }
 
-    private void TryPushPlayer()
+    void TryPush()
     {
         if (Time.time < lastPushTime + pushCooldown) return;
 
-        StartCoroutine(PushRoutine());
+        StartCoroutine(Push());
     }
 
-    private IEnumerator PushRoutine()
+    IEnumerator Push()
     {
-        isPushing = true;
+        pushing = true;
 
-        if (goblinRenderer != null)
-            goblinRenderer.material.color = warningColor;
+        if (rend != null)
+            rend.material.color = alertColor;
 
-        yield return new WaitForSeconds(pushWindUp);
+        yield return new WaitForSeconds(pushDelay);
 
-        float distance = Vector3.Distance(transform.position, player.position);
+        float dist = Vector3.Distance(transform.position, player.position);
 
-        if (distance <= pushTriggerDistance + 0.5f)
+        if (dist <= pushRange + 0.5f)
         {
-            Health health = player.GetComponent<Health>();
+            Health hp = player.GetComponent<Health>();
 
-            if (health != null)
-            {
-                health.TakeDamage(pushDamage);
-            }
+            if (hp != null)
+                hp.TakeDamage(pushDamage);
 
-            PlayerKnockback knockback = player.GetComponent<PlayerKnockback>();
+            PlayerKnockback kb = player.GetComponent<PlayerKnockback>();
 
-            if (knockback != null)
+            if (kb != null)
             {
-                Vector3 pushDir = player.position - transform.position;
-                knockback.ApplyKnockback(pushDir, pushForce);
-            }
-            else
-            {
-                Debug.LogWarning("El Player no tiene PlayerKnockback");
+                Vector3 dir = player.position - transform.position;
+                kb.ApplyKnockback(dir, pushStrength);
             }
         }
 
-        if (goblinRenderer != null)
-            goblinRenderer.material.color = normalColor;
+        if (rend != null)
+            rend.material.color = normalColor;
 
         lastPushTime = Time.time;
-        isPushing = false;
+        pushing = false;
     }
 }
