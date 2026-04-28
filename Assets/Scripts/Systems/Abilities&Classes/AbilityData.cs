@@ -17,26 +17,17 @@ class AbilityData : ScriptableObject
     }
 }
 
-[Serializable] abstract class AbilityEffect //: MonoBehaviour
+[Serializable] abstract class AbilityEffect//<TTarget> //: MonoBehaviour
 {
-    public abstract void Execute();
-}
-
-class Damage : AbilityEffect
-{
-    [SerializeField] float damageValue;
-
-    public override void Execute()
-    {
-
-    }
-
+    public abstract void Apply();
+    public abstract void Cancel();
+    event Action<AbilityEffect/*<TTarget>*/> OnCompleted;
 }
 
 class TestEffect : AbilityEffect
 {
     [SerializeField] private GameObject player;
-    public override void Execute()
+    public override void Apply()
     {
         GameObject spawnPlace = GameObject.Find("bullshitspawn");
         GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -45,12 +36,16 @@ class TestEffect : AbilityEffect
         UnityEngine.Object.Destroy(cube, 5.0f);
     }
 
+    public override void Cancel()
+    {
+        throw new NotImplementedException();
+    }
 }
 
 class TestEffectOne : AbilityEffect
 {
     [SerializeField] private GameObject player;
-    public override void Execute()
+    public override void Apply()
     {
         GameObject spawnPlace = GameObject.Find("bullshitspawn");
         GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Capsule);
@@ -59,15 +54,23 @@ class TestEffectOne : AbilityEffect
         UnityEngine.Object.Destroy(cube, 5.0f);
     }
 
+    public override void Cancel()
+    {
+        throw new NotImplementedException();
+    }
 }
 
 class TestEffectTwo : AbilityEffect
 {
     [SerializeField] float damageValue;
 
-    public override void Execute()
+    public override void Apply()
     {
 
     }
 
+    public override void Cancel()
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -49,27 +49,27 @@ class PlayerBrain : MonoBehaviour
         {
             case 1:
                 foreach (var effects in classAbility.headAbility.effects)
-                    effects.Execute();
+                    effects.Apply();
                 break;
             case 2:
                 foreach (var effects in classAbility.torsoAbility.effects)
-                    effects.Execute();
+                    effects.Apply();
                 break;
             case 3:
                 foreach (var effects in classAbility.armsAbility.effects)
-                    effects.Execute();
+                    effects.Apply();
                 break;
             case 4:
                 foreach (var effects in classAbility.legsAbility.effects)
-                    effects.Execute();
+                    effects.Apply();
                 break;
             case 5:
                 foreach (var effects in classAbility.primaryAttack.effects)
-                    effects.Execute();
+                    effects.Apply();
                 break;
             case 6:
                 foreach (var effects in classAbility.secondaryAttack.effects)
-                    effects.Execute();
+                    effects.Apply();
                 break;
         }
     }
@@ -214,42 +214,42 @@ class PlayerBrain : MonoBehaviour
     {
         foreach (var effect in head.headAbility.effects)
         {
-            effect.Execute();
+            effect.Apply();
         }
     }
     public void DefenseAbility()
     {
         foreach (var effect in torso.torsoAbility.effects)
         {
-            effect.Execute();
+            effect.Apply();
         }
     }
     public void OffenseAbility()
     {
         foreach (var effect in arms.armsAbility.effects)
         {
-            effect.Execute();
+            effect.Apply();
         }
     }
     public void MovementAbility()
     {
         foreach (var effect in legs.legsAbility.effects)
         {
-            effect.Execute();
+            effect.Apply();
         }
     }
     public void PrimaryAttack()
     {
         foreach (var effect in weapon.primaryAttack.effects)
         {
-            effect.Execute();
+            effect.Apply();
         }
     }
     public void SecondaryAttack()
     {
         foreach (var effect in weapon.secondaryAttack.effects)
         {
-            effect.Execute();
+            effect.Apply();
         }
     }
 
