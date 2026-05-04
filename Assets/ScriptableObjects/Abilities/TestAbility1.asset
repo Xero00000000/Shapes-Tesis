@@ -13,12 +13,19 @@ MonoBehaviour:
   m_Name: TestAbility1
   m_EditorClassIdentifier: 
   label: TestAbility1
+  castSoundEffect: {fileID: 0}
+  castVisualEffect: {fileID: 0}
+  runningVisualEffect: {fileID: 0}
   effects:
-  - rid: 265759045747474503
+  - rid: 2697674956666306634
+  targetingStrategy:
+    rid: -2
   references:
     version: 2
     RefIds:
-    - rid: 265759045747474503
-      type: {class: TestEffectOne, ns: , asm: Assembly-CSharp}
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 2697674956666306634
+      type: {class: InstantDamage, ns: , asm: Assembly-CSharp}
       data:
-        player: {fileID: 0}
+        damageValue: 0

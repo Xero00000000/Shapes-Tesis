@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-public class TargetingManager : MonoBehaviour
+class TargetingManager : MonoBehaviour
 {
-    //public InputReader input;
+    public InputReader input;
     public Camera cam;
 
     TargetingStrategy currentStrategy;
@@ -14,4 +14,7 @@ public class TargetingManager : MonoBehaviour
             currentStrategy.Update();
         }
     }
+
+    public void SetCurrentStrategy(TargetingStrategy strategy) => currentStrategy = strategy;
+    public void ClearCurrentStrategy() => currentStrategy = null;
 }

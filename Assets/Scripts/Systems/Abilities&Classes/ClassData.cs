@@ -21,19 +21,12 @@ class ClassData : ScriptableObject
     [SerializeField] int magicalAttack;
     [SerializeField] int Dexterity;
 
-    //[SerializeReference] public GameObject classHead;
-    //[SerializeReference] public GameObject classTorso;
-    //[SerializeReference] public GameObject classRightArm;
-    //[SerializeReference] public GameObject classLeftArm;
-    //[SerializeReference] public GameObject classRightLeg;
-    //[SerializeReference] public GameObject classLeftLeg;
-
-    [SerializeField] public BodyPartData head;
-    [SerializeField] public BodyPartData torso;
-    [SerializeField] public BodyPartData rightArm;
-    [SerializeField] public BodyPartData leftArm;
-    [SerializeField] public BodyPartData rightLeg;
-    [SerializeField] public BodyPartData leftLeg;
+    [SerializeReference] public GameObject classHead;
+    [SerializeReference] public GameObject classTorso;
+    [SerializeReference] public GameObject classRightArm;
+    [SerializeReference] public GameObject classLeftArm;
+    [SerializeReference] public GameObject classRightLeg;
+    [SerializeReference] public GameObject classLeftLeg;
 
     void OnEnable()
     {
@@ -46,7 +39,7 @@ class ClassData : ScriptableObject
         if (primaryAttack == null) primaryAttack = (AbilityData)ScriptableObject.CreateInstance(typeof(AbilityData));
         if (secondaryAttack == null) secondaryAttack = (AbilityData)ScriptableObject.CreateInstance(typeof(AbilityData));
     }
-
+    /*
     public int TotalHP => hpModifier + Sum(p => p.hpModifier);
     public int TotalEnergy => energy + Sum(p => p.energy);
     public int TotalPhysicalDefense => physicalDefense + Sum(p => p.physicalDefense);
@@ -70,4 +63,5 @@ class ClassData : ScriptableObject
 
         return total;
     }
+    */
 }

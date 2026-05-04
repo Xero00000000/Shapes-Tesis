@@ -6,7 +6,7 @@ using System.Linq;
 using System.Collections.Generic;
 
 
-[CustomPropertyDrawer(typeof(AbilityEffect), true)]
+[CustomPropertyDrawer(typeof(AbilityEffect<IDamageable>), true)]
 public class AbilityEffectDrawer : PropertyDrawer
 {
     static Dictionary<string, Type> typeMap;
@@ -63,7 +63,7 @@ public class AbilityEffectDrawer : PropertyDrawer
 
     static void BuildTypeMap()
     {
-        var baseType = typeof(AbilityEffect);
+        var baseType = typeof(AbilityEffect<IDamageable>);
         typeMap = AppDomain.CurrentDomain.GetAssemblies()
             .SelectMany(asm =>
             {
@@ -81,4 +81,6 @@ public class AbilityEffectDrawer : PropertyDrawer
         return parts.Length > 1 ? parts[1].Split('.').Last() : fullTypeName;
     }
 }
+
+
 #endif

@@ -4,30 +4,16 @@ using System.Collections.Generic;
 using ImprovedTimers;
 using UnityEngine;
 
-[Serializable]
-public class DamageEffect : IEffect<IDamageable>
-{
-    public int damageAmmount;
 
-    public void Apply(IDamageable target)
-    {
-        target.TakeDamage(damageAmmount);
-    }
-
-    public void Cancel()
-    {
-
-    }
-}
-
-class InstantDamage : AbilityEffect
+class InstantDamage : AbilityEffect<IDamageable>
 {
     [SerializeField] float damageValue;
 
-    public event Action<AbilityEffect> OnCompleted;
+    public override event Action<AbilityEffect<IDamageable>> OnCompleted;
 
-    public override void Apply()
+    public override void Apply(IDamageable target)
     {
+        target.TakeDamage(damageValue);
         OnCompleted?.Invoke(this);
     }
     public override void Cancel()
@@ -37,7 +23,7 @@ class InstantDamage : AbilityEffect
 }
 
 [Serializable]
-public class DamageOverTimeEffect : IEffect<IDamageable>
+class DamageOverTimeEffect : AbilityEffect<IDamageable>
 {
     public float duration;
     public float tickInterval;
@@ -46,7 +32,9 @@ public class DamageOverTimeEffect : IEffect<IDamageable>
     IntervalTimer timer;
     IDamageable currentTarget;
 
-    public void Apply(IDamageable target)
+    public override event Action<AbilityEffect<IDamageable>> OnCompleted;
+
+    public override void Apply(IDamageable target)
     {
         currentTarget = target;
         timer = new IntervalTimer(duration, tickInterval);
@@ -59,7 +47,7 @@ public class DamageOverTimeEffect : IEffect<IDamageable>
     void OnStop() => Cleanup();
 
 
-    public void Cancel()
+    public override void Cancel()
     {
         timer?.Stop();
         Cleanup();
@@ -69,6 +57,6 @@ public class DamageOverTimeEffect : IEffect<IDamageable>
     {
         timer = null;
         currentTarget = null;
-        //OnCompleted?.Invoke(this);
+        OnCompleted?.Invoke(this);
     }
 }

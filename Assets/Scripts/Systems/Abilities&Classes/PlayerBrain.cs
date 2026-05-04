@@ -1,7 +1,20 @@
 using UnityEngine;
+using UnityUtils;
 
+[RequireComponent(typeof(TargetingManager))]
 class PlayerBrain : MonoBehaviour
 {
+    [SerializeField] TargetingManager targetingManager;
+    [SerializeField] InputReader input;
+    bool isUsingAbility;
+    Vector2 moveInput;
+    [SerializeField] float moveSpeed;
+    [SerializeField] Transform playerModel;
+    [SerializeField] Camera mainCamera;
+    Vector3 mouseWorldPosition;
+    public Vector3 GetMovementVelocity() => moveInput;
+    [SerializeField] private LayerMask floorLayer;
+
     //los stats van asi por ahora, despues vemos de como cambiamos en player brain
     [SerializeField] int hpModifier;
     [SerializeField] int energy;
@@ -32,6 +45,7 @@ class PlayerBrain : MonoBehaviour
     private GameObject currentLeftLeg;
     //private GameObject currentWeapon;
 
+
     //temporal
     public void Start()
     {
@@ -41,35 +55,101 @@ class PlayerBrain : MonoBehaviour
         currentLeftArm = Instantiate(arms.classLeftArm, leftArmOffset.gameObject.transform);
         currentRightLeg = Instantiate(legs.classRightLeg, rightLegOffset.gameObject.transform);
         currentLeftLeg = Instantiate(legs.classLeftLeg, leftLegOffset.gameObject.transform);
+
+        input.Move += direction => moveInput = direction;
+        
+        input.UtilityAbility += IsUtilityAbilityPressed =>
+        {
+            if (IsUtilityAbilityPressed)
+            {
+                Cast(head, 1);
+            }
+            else
+            {
+
+            }
+        };
+        input.DefensiveAbility += IsDefensiveAbilityPressed =>
+        {
+            if (IsDefensiveAbilityPressed)
+            {
+                Cast(torso, 2);
+            }
+            else
+            {
+
+            }
+        };
+        input.OfensiveAbility += IsOfensiveAbilityPressed =>
+        {
+            if (IsOfensiveAbilityPressed)
+            {
+                Cast(arms, 3);
+            }
+            else
+            {
+
+            }
+        };
+        input.MoveAbility += IsMoveAbilityPressed =>
+        {
+            if (IsMoveAbilityPressed)
+            {
+                Cast(legs, 4);
+            }
+            else
+            {
+
+            }
+        };
+        input.PrimaryAttack += IsPrimaryAttackPressed =>
+        {
+            if (IsPrimaryAttackPressed)
+            {
+                Cast(weapon, 5);
+            }
+            else
+            {
+
+            }
+        };
+        input.SecondaryAttack += IsSecondaryAttackPressed =>
+        {
+            if (IsSecondaryAttackPressed)
+            {
+                Cast(weapon, 6);
+            }
+            else
+            {
+
+            }
+        };
+
+
+        input.EnablePlayerActions();
     }
 
-    public void Execute(ClassData classAbility, int partAbility)
+    public void Cast(ClassData classAbility, int partAbility)
     {
         switch (partAbility)
         {
             case 1:
-                foreach (var effects in classAbility.headAbility.effects)
-                    effects.Apply();
+                classAbility.headAbility.Target(targetingManager);
                 break;
             case 2:
-                foreach (var effects in classAbility.torsoAbility.effects)
-                    effects.Apply();
+                classAbility.torsoAbility.Target(targetingManager);
                 break;
             case 3:
-                foreach (var effects in classAbility.armsAbility.effects)
-                    effects.Apply();
+                classAbility.armsAbility.Target(targetingManager);
                 break;
             case 4:
-                foreach (var effects in classAbility.legsAbility.effects)
-                    effects.Apply();
+                classAbility.legsAbility.Target(targetingManager);
                 break;
             case 5:
-                foreach (var effects in classAbility.primaryAttack.effects)
-                    effects.Apply();
+                classAbility.primaryAttack.Target(targetingManager);
                 break;
             case 6:
-                foreach (var effects in classAbility.secondaryAttack.effects)
-                    effects.Apply();
+                classAbility.secondaryAttack.Target(targetingManager);
                 break;
         }
     }
@@ -77,6 +157,24 @@ class PlayerBrain : MonoBehaviour
     //tambien temporal
     public void Update()
     {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, floorLayer))
+        {
+            mouseWorldPosition = raycastHit.point;
+
+            Vector3 direction = mouseWorldPosition - transform.position;
+            direction.y = 0f;
+
+            if (direction != Vector3.zero)
+            {
+                Quaternion lookRotation = Quaternion.LookRotation(direction);
+                transform.rotation = Quaternion.Euler(0f, lookRotation.eulerAngles.y, 0f);
+            }
+        }
+        //playerModel.rotation = Quaternion.LookRotation(mouseWorldPosition);
+        Move(CalculateMovementDirection());
+
+        /*
         if (Input.GetKeyDown(KeyCode.Q))
         {
             Execute(head, 1);
@@ -92,8 +190,23 @@ class PlayerBrain : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             Execute(head, 4);
-        }
+        }*/
+    }
 
+    void Move(Vector3 direction)
+    {
+        if (direction.sqrMagnitude > 0.01f)
+        {
+            transform.position += direction * (Time.deltaTime * moveSpeed);
+        }
+    }
+
+    Vector3 CalculateMovementDirection()
+    {
+        Vector3 cameraForward = new Vector3(mainCamera.transform.forward.x, 0, mainCamera.transform.forward.z).normalized;
+        Vector3 cameraRight = new Vector3(mainCamera.transform.right.x, 0, mainCamera.transform.right.z).normalized;
+
+        return cameraForward * moveInput.y + cameraRight * moveInput.x;
     }
 
     /*
@@ -210,47 +323,29 @@ class PlayerBrain : MonoBehaviour
         }
     }
 
-    public void UtilityAbility()
+    public void UtilityAbility(IDamageable target)
     {
-        foreach (var effect in head.headAbility.effects)
-        {
-            effect.Apply();
-        }
+        head.headAbility.Execute(target);
     }
-    public void DefenseAbility()
+    public void DefenseAbility(IDamageable target)
     {
-        foreach (var effect in torso.torsoAbility.effects)
-        {
-            effect.Apply();
-        }
+        torso.torsoAbility.Execute(target);
     }
-    public void OffenseAbility()
+    public void OffenseAbility(IDamageable target)
     {
-        foreach (var effect in arms.armsAbility.effects)
-        {
-            effect.Apply();
-        }
+        arms.armsAbility.Execute(target);
     }
-    public void MovementAbility()
+    public void MovementAbility(IDamageable target)
     {
-        foreach (var effect in legs.legsAbility.effects)
-        {
-            effect.Apply();
-        }
+        legs.legsAbility.Execute(target);
     }
-    public void PrimaryAttack()
+    public void PrimaryAttack(IDamageable target)
     {
-        foreach (var effect in weapon.primaryAttack.effects)
-        {
-            effect.Apply();
-        }
+        weapon.primaryAttack.Execute(target);
     }
-    public void SecondaryAttack()
+    public void SecondaryAttack(IDamageable target)
     {
-        foreach (var effect in weapon.secondaryAttack.effects)
-        {
-            effect.Apply();
-        }
+        weapon.secondaryAttack.Execute(target);
     }
 
 }

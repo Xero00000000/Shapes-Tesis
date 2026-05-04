@@ -8,26 +8,88 @@ using UnityEditor;
 class AbilityData : ScriptableObject
 {
     public string label;
-    [SerializeReference] public List<AbilityEffect> effects;
+
+    [SerializeField] AudioClip castSoundEffect;
+    [SerializeField] GameObject castVisualEffect;
+    [SerializeField] GameObject runningVisualEffect;
+
+    //[Header("Effects")]
+    [SerializeReference] public List<AbilityEffect<IDamageable>> effects;
+
+    [Header("Targeting")]
+    [SerializeReference] TargetingStrategy targetingStrategy;
+
+    public void Target(TargetingManager targetingManager)
+    {
+        if (targetingStrategy != null)
+        {
+            targetingStrategy.Start(this, targetingManager);
+        }
+    }
 
     void OnEnable()
     {
         if (string.IsNullOrEmpty(label)) label = name;
-        if (effects == null) effects = new List<AbilityEffect>();
+        if (effects == null) effects = new List<AbilityEffect<IDamageable>>();
+    }
+
+    public void Execute(IDamageable target)
+    {
+        HandleVFX(target);
+        HandleSFX(target);
+
+        foreach (var effect in effects)
+        {
+            if (target is EnemyBrainTest enemy)
+            {
+                enemy.ApplyEffect(effect);
+            }
+            else
+            {
+                effect.Apply(target);
+            }
+        }
+    }
+
+    void HandleVFX(IDamageable target)
+    {
+        var targetMb = target as MonoBehaviour;
+        if (targetMb == null) return;
+
+        if (castVisualEffect != null)
+        {
+            Instantiate(castVisualEffect, targetMb.transform.position, Quaternion.identity);
+        }
+
+        if (runningVisualEffect != null)
+        {
+            Instantiate(runningVisualEffect, targetMb.transform);
+        }
+    }
+
+    void HandleSFX (IDamageable target)
+    {
+        var targetMb = target as MonoBehaviour;
+        if (targetMb == null) return;
+        
+        AudioSource.PlayClipAtPoint(castSoundEffect, targetMb.transform.position);
     }
 }
 
-[Serializable] abstract class AbilityEffect//<TTarget> //: MonoBehaviour
+[Serializable] abstract class AbilityEffect<TTarget>
 {
-    public abstract void Apply();
+    public abstract void Apply(TTarget target);
     public abstract void Cancel();
-    event Action<AbilityEffect/*<TTarget>*/> OnCompleted;
+    public abstract event Action<AbilityEffect<TTarget>> OnCompleted;
 }
 
-class TestEffect : AbilityEffect
+class TestEffect : AbilityEffect<IDamageable>
 {
     [SerializeField] private GameObject player;
-    public override void Apply()
+
+    public override event Action<AbilityEffect<IDamageable>> OnCompleted;
+
+    public override void Apply(IDamageable target)
     {
         GameObject spawnPlace = GameObject.Find("bullshitspawn");
         GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -42,10 +104,13 @@ class TestEffect : AbilityEffect
     }
 }
 
-class TestEffectOne : AbilityEffect
+class TestEffectOne : AbilityEffect<IDamageable>
 {
     [SerializeField] private GameObject player;
-    public override void Apply()
+
+    public override event Action<AbilityEffect<IDamageable>> OnCompleted;
+
+    public override void Apply(IDamageable target)
     {
         GameObject spawnPlace = GameObject.Find("bullshitspawn");
         GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Capsule);
@@ -60,11 +125,13 @@ class TestEffectOne : AbilityEffect
     }
 }
 
-class TestEffectTwo : AbilityEffect
+class TestEffectTwo : AbilityEffect<IDamageable>
 {
     [SerializeField] float damageValue;
 
-    public override void Apply()
+    public override event Action<AbilityEffect<IDamageable>> OnCompleted;
+
+    public override void Apply(IDamageable target)
     {
 
     }

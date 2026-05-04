@@ -27,7 +27,7 @@ namespace ImprovedTimers
 #if UNITY_EDITOR
             EditorApplication.playModeStateChanged -= OnPlayModeState;
             EditorApplication.playModeStateChanged += OnPlayModeState;
-#endif
+//#endif
             static void OnPlayModeState(PlayModeStateChange state)
             {
                 if (state == PlayModeStateChange.ExitingEditMode)
@@ -39,7 +39,9 @@ namespace ImprovedTimers
                     TimerManager.Clear();
                 }
             }
+#endif
         }
+
 
         static void RemoveTimerManager<T>(ref PlayerLoopSystem loop)
         {
