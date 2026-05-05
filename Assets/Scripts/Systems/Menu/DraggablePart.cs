@@ -7,11 +7,9 @@ public class DraggablePart : DraggableItem
     [SerializeField] ClassData theClass;
     [SerializeField] int partValue;
 
-    /*
-    public void SwappingPart()
-    {
-        partSwap.Raise(this, (partValue, theClass));
-    }*/
+    internal ClassData TheClass => theClass;
+    internal int PartValue => partValue;
+
     public void SwappingPart()
     {
         partSwap.Raise(partValue, theClass);

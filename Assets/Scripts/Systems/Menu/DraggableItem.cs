@@ -1,31 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using PrimeTween;
 
 public class DraggableItem : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     public Image image;
-
     public Transform parentAfterDrag;
 
-    private void Awake()
-    {
-
-    }
     public void OnPointerDown(PointerEventData eventData)
     {
-
+        HideStatsPanel();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
-    {//probablemente sea mejor usar parent constraint component para esto, asi no uso tantos ifs en MenuSlot, despues me fijo
+    {
+        HideStatsPanel();
+
         parentAfterDrag = transform.parent;
-        transform.SetParent(transform.root);
+
+        transform.SetParent(transform.root, true);
         transform.SetAsLastSibling();
-        image.raycastTarget = false;
+
+        if (image != null)
+            image.raycastTarget = false;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -35,9 +32,20 @@ public class DraggableItem : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        transform.SetParent(parentAfterDrag);
-        image.raycastTarget = true;
+        transform.SetParent(parentAfterDrag, false);
+        transform.localPosition = Vector3.zero;
+
+        if (image != null)
+            image.raycastTarget = true;
+
+        HideStatsPanel();
     }
 
+    private void HideStatsPanel()
+    {
+        PartStatsPanel statsPanel = FindFirstObjectByType<PartStatsPanel>();
 
+        if (statsPanel != null)
+            statsPanel.Hide();
+    }
 }
