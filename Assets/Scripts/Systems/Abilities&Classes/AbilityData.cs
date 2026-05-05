@@ -3,18 +3,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using ImprovedTimers;
 
 [CreateAssetMenu(fileName = "AbilityData", menuName = "ScriptableObjects/AbilityData")]
 class AbilityData : ScriptableObject
 {
     public string label;
 
+    public float castTime;
     [SerializeField] AudioClip castSoundEffect;
     [SerializeField] GameObject castVisualEffect;
     [SerializeField] GameObject runningVisualEffect;
 
     //[Header("Effects")]
-    [SerializeReference] public List<AbilityEffect<IDamageable>> effects;
+    [SerializeReference] public List<IEffectFactory<IDamageable>> effects;
 
     [Header("Targeting")]
     [SerializeReference] TargetingStrategy targetingStrategy;
@@ -30,7 +32,7 @@ class AbilityData : ScriptableObject
     void OnEnable()
     {
         if (string.IsNullOrEmpty(label)) label = name;
-        if (effects == null) effects = new List<AbilityEffect<IDamageable>>();
+        if (effects == null) effects = new List<IEffectFactory<IDamageable>>();
     }
 
     public void Execute(IDamageable target)
@@ -40,6 +42,9 @@ class AbilityData : ScriptableObject
 
         foreach (var effect in effects)
         {
+            var runtimeEffect = effect.Create();
+            target.ApplyEffect(runtimeEffect);
+            /*
             if (target is EnemyBrainTest enemy)
             {
                 enemy.ApplyEffect(effect);
@@ -47,7 +52,7 @@ class AbilityData : ScriptableObject
             else
             {
                 effect.Apply(target);
-            }
+            }*/
         }
     }
 
@@ -76,20 +81,13 @@ class AbilityData : ScriptableObject
     }
 }
 
-[Serializable] abstract class AbilityEffect<TTarget>
-{
-    public abstract void Apply(TTarget target);
-    public abstract void Cancel();
-    public abstract event Action<AbilityEffect<TTarget>> OnCompleted;
-}
-
-class TestEffect : AbilityEffect<IDamageable>
+class TestEffect : IAbilityEffect<IDamageable>
 {
     [SerializeField] private GameObject player;
 
-    public override event Action<AbilityEffect<IDamageable>> OnCompleted;
+    public event Action<IAbilityEffect<IDamageable>> OnCompleted;
 
-    public override void Apply(IDamageable target)
+    public void Apply(IDamageable target)
     {
         GameObject spawnPlace = GameObject.Find("bullshitspawn");
         GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -98,19 +96,19 @@ class TestEffect : AbilityEffect<IDamageable>
         UnityEngine.Object.Destroy(cube, 5.0f);
     }
 
-    public override void Cancel()
+    public void Cancel()
     {
         throw new NotImplementedException();
     }
 }
 
-class TestEffectOne : AbilityEffect<IDamageable>
+class TestEffectOne : IAbilityEffect<IDamageable>
 {
     [SerializeField] private GameObject player;
 
-    public override event Action<AbilityEffect<IDamageable>> OnCompleted;
+    public event Action<IAbilityEffect<IDamageable>> OnCompleted;
 
-    public override void Apply(IDamageable target)
+    public void Apply(IDamageable target)
     {
         GameObject spawnPlace = GameObject.Find("bullshitspawn");
         GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Capsule);
@@ -119,24 +117,7 @@ class TestEffectOne : AbilityEffect<IDamageable>
         UnityEngine.Object.Destroy(cube, 5.0f);
     }
 
-    public override void Cancel()
-    {
-        throw new NotImplementedException();
-    }
-}
-
-class TestEffectTwo : AbilityEffect<IDamageable>
-{
-    [SerializeField] float damageValue;
-
-    public override event Action<AbilityEffect<IDamageable>> OnCompleted;
-
-    public override void Apply(IDamageable target)
-    {
-
-    }
-
-    public override void Cancel()
+    public void Cancel()
     {
         throw new NotImplementedException();
     }

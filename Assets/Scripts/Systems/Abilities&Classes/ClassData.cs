@@ -22,6 +22,7 @@ class ClassData : ScriptableObject
     [SerializeField] int magicalAttack;
     [SerializeField] int Dexterity;
 
+    /*
     internal int HpModifier => hpModifier;
     internal int Energy => energy;
     internal int PhysicalDefense => physicalDefense;
@@ -30,6 +31,7 @@ class ClassData : ScriptableObject
     internal int PhysicalAttack => physicalAttack;
     internal int MagicalAttack => magicalAttack;
     internal int DexterityValue => Dexterity;
+    */
 
     [SerializeReference] public GameObject classHead;
     [SerializeReference] public GameObject classTorso;
@@ -49,4 +51,30 @@ class ClassData : ScriptableObject
         if (primaryAttack == null) primaryAttack = (AbilityData)ScriptableObject.CreateInstance(typeof(AbilityData));
         if (secondaryAttack == null) secondaryAttack = (AbilityData)ScriptableObject.CreateInstance(typeof(AbilityData));
     }
+
+    /*
+   public int TotalHP => hpModifier + Sum(p => p.hpModifier);
+   public int TotalEnergy => energy + Sum(p => p.energy);
+   public int TotalPhysicalDefense => physicalDefense + Sum(p => p.physicalDefense);
+   public int TotalMagicalDefense => magicalDefense + Sum(p => p.magicalDefense);
+   public int TotalSpeed => speed + Sum(p => p.speed);
+   public int TotalPhysicalAttack => physicalAttack + Sum(p => p.physicalAttack);
+   public int TotalMagicalAttack => magicalAttack + Sum(p => p.magicalAttack);
+   public int TotalDexterity => Dexterity + Sum(p => p.dexterity);
+
+   int Sum(System.Func<BodyPartData, int> selector)
+   {
+       int total = 0;
+
+       BodyPartData[] parts = { head, torso, rightArm, leftArm, rightLeg, leftLeg };
+
+       foreach (var part in parts)
+       {
+           if (part != null)
+               total += selector(part);
+       }
+
+       return total;
+   }
+   */
 }

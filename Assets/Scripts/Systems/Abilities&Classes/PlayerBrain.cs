@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityUtils;
+using ImprovedTimers;
 
 [RequireComponent(typeof(TargetingManager))]
 class PlayerBrain : MonoBehaviour
@@ -14,6 +15,8 @@ class PlayerBrain : MonoBehaviour
     Vector3 mouseWorldPosition;
     public Vector3 GetMovementVelocity() => moveInput;
     [SerializeField] private LayerMask floorLayer;
+
+    CountdownTimer castTimer;
 
     //los stats van asi por ahora, despues vemos de como cambiamos en player brain
     [SerializeField] int hpModifier;
@@ -46,9 +49,9 @@ class PlayerBrain : MonoBehaviour
     //private GameObject currentWeapon;
 
 
-    //temporal
     public void Start()
     {
+        //temporal
         currentHead = Instantiate(head.classHead, headOffset.gameObject.transform);
         currentTorso = Instantiate(torso.classTorso, this.gameObject.transform);
         currentRightArm = Instantiate(arms.classRightArm, rightArmOffset.gameObject.transform);
@@ -134,22 +137,34 @@ class PlayerBrain : MonoBehaviour
         switch (partAbility)
         {
             case 1:
-                classAbility.headAbility.Target(targetingManager);
+                castTimer = new CountdownTimer(classAbility.headAbility.castTime);
+                //castTimer.OnTimerStart = () => ?;
+                castTimer.OnTimerStop = () => classAbility.headAbility.Target(targetingManager);
                 break;
             case 2:
-                classAbility.torsoAbility.Target(targetingManager);
+                castTimer = new CountdownTimer(classAbility.headAbility.castTime);
+                //castTimer.OnTimerStart = () => ?;
+                castTimer.OnTimerStop = () => classAbility.torsoAbility.Target(targetingManager);
                 break;
             case 3:
-                classAbility.armsAbility.Target(targetingManager);
+                castTimer = new CountdownTimer(classAbility.headAbility.castTime);
+                //castTimer.OnTimerStart = () => ?;
+                castTimer.OnTimerStop = () => classAbility.armsAbility.Target(targetingManager);
                 break;
             case 4:
-                classAbility.legsAbility.Target(targetingManager);
+                castTimer = new CountdownTimer(classAbility.headAbility.castTime);
+                //castTimer.OnTimerStart = () => ?;
+                castTimer.OnTimerStop = () => classAbility.legsAbility.Target(targetingManager);
                 break;
             case 5:
-                classAbility.primaryAttack.Target(targetingManager);
+                castTimer = new CountdownTimer(classAbility.headAbility.castTime);
+                //castTimer.OnTimerStart = () => ?;
+                castTimer.OnTimerStop = () => classAbility.primaryAttack.Target(targetingManager);
                 break;
             case 6:
-                classAbility.secondaryAttack.Target(targetingManager);
+                castTimer = new CountdownTimer(classAbility.headAbility.castTime);
+                //castTimer.OnTimerStart = () => ?;
+                castTimer.OnTimerStop = () => classAbility.secondaryAttack.Target(targetingManager);
                 break;
         }
     }
@@ -170,6 +185,8 @@ class PlayerBrain : MonoBehaviour
                 Quaternion lookRotation = Quaternion.LookRotation(direction);
                 transform.rotation = Quaternion.Euler(0f, lookRotation.eulerAngles.y, 0f);
             }
+
+            targetingManager.mouseWorldPosition = mouseWorldPosition;
         }
         //playerModel.rotation = Quaternion.LookRotation(mouseWorldPosition);
         Move(CalculateMovementDirection());

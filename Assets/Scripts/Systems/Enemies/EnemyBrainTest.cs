@@ -6,7 +6,7 @@ using System.Collections.Generic;
 class EnemyBrainTest : MonoBehaviour, IDamageable
 {
     [SerializeField] float health;
-    readonly public List<AbilityEffect<IDamageable>> activeEffects = new();
+    readonly public List<IAbilityEffect<IDamageable>> activeEffects = new();
 
     public void TakeDamage(float amount)
     {
@@ -18,14 +18,14 @@ class EnemyBrainTest : MonoBehaviour, IDamageable
         }
     }
 
-    public void ApplyEffect(AbilityEffect<IDamageable> effect)
+    public void ApplyEffect(IAbilityEffect<IDamageable> effect)
     {
         effect.OnCompleted += RemoveEffect;
         activeEffects.Add(effect);
         effect.Apply(this);
     }
 
-     public void RemoveEffect(AbilityEffect<IDamageable> effect)
+     public void RemoveEffect(IAbilityEffect<IDamageable> effect)
     {
         effect.OnCompleted -= RemoveEffect;
         activeEffects.Remove(effect);

@@ -5,36 +5,63 @@ using ImprovedTimers;
 using UnityEngine;
 
 
-class InstantDamage : AbilityEffect<IDamageable>
+class InstantDamageFactory : IEffectFactory<IDamageable>
 {
     [SerializeField] float damageValue;
 
-    public override event Action<AbilityEffect<IDamageable>> OnCompleted;
+    public IAbilityEffect<IDamageable> Create()
+    {
+        return new InstantDamage { damageValue = damageValue };
+    }
+}
 
-    public override void Apply(IDamageable target)
+class DamageOverTimeFactory : IEffectFactory<IDamageable>
+{
+    [SerializeField] float duration;
+    [SerializeField] float tickInterval;
+    [SerializeField] float damagePerTick;
+
+    public IAbilityEffect<IDamageable> Create()
+    {
+        return new DamageOverTimeEffect
+        {
+            duration = duration,
+            tickInterval = tickInterval,
+            damagePerTick = damagePerTick
+        };
+    }
+}
+
+struct InstantDamage : IAbilityEffect<IDamageable>
+{
+    public float damageValue;
+
+    public event Action<IAbilityEffect<IDamageable>> OnCompleted;
+
+    public void Apply(IDamageable target)
     {
         target.TakeDamage(damageValue);
         OnCompleted?.Invoke(this);
     }
-    public override void Cancel()
+    public void Cancel()
     {
         OnCompleted?.Invoke(this);
     }
 }
 
-[Serializable]
-class DamageOverTimeEffect : AbilityEffect<IDamageable>
+
+struct DamageOverTimeEffect : IAbilityEffect<IDamageable>
 {
     public float duration;
     public float tickInterval;
-    public int damagePerTick;
+    public float damagePerTick;
 
     IntervalTimer timer;
     IDamageable currentTarget;
 
-    public override event Action<AbilityEffect<IDamageable>> OnCompleted;
+    public event Action<IAbilityEffect<IDamageable>> OnCompleted;
 
-    public override void Apply(IDamageable target)
+    public void Apply(IDamageable target)
     {
         currentTarget = target;
         timer = new IntervalTimer(duration, tickInterval);
@@ -47,7 +74,7 @@ class DamageOverTimeEffect : AbilityEffect<IDamageable>
     void OnStop() => Cleanup();
 
 
-    public override void Cancel()
+    public void Cancel()
     {
         timer?.Stop();
         Cleanup();

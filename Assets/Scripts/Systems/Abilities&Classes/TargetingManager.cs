@@ -4,6 +4,7 @@ class TargetingManager : MonoBehaviour
 {
     public InputReader input;
     public Camera cam;
+    public Vector3 mouseWorldPosition;
 
     TargetingStrategy currentStrategy;
 

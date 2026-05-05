@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afe9acbdaafe3684bb1d2ed61874e2d6, type: 3}
+  m_Name: Mago
+  m_EditorClassIdentifier: 
+  label: Mago
+  passiveAbility: {fileID: 0}
+  headAbility: {fileID: 11400000, guid: ba4e81344986ed646b5472e800f2043f, type: 2}
+  armsAbility: {fileID: 11400000, guid: ba4e81344986ed646b5472e800f2043f, type: 2}
+  torsoAbility: {fileID: 11400000, guid: ba4e81344986ed646b5472e800f2043f, type: 2}
+  legsAbility: {fileID: 11400000, guid: ba4e81344986ed646b5472e800f2043f, type: 2}
+  primaryAttack: {fileID: 11400000, guid: ba4e81344986ed646b5472e800f2043f, type: 2}
+  secondaryAttack: {fileID: 11400000, guid: ba4e81344986ed646b5472e800f2043f, type: 2}
+  hpModifier: 5
+  energy: 5
+  physicalDefense: 5
+  magicalDefense: 5
+  speed: 5
+  physicalAttack: 5
+  magicalAttack: 5
+  Dexterity: 5
+  classHead: {fileID: 919132149155446097, guid: 483d686bbce35664897c921b4fdf8371, type: 3}
+  classTorso: {fileID: 919132149155446097, guid: 4295a1183584fa54199324587efcd3ea, type: 3}
+  classRightArm: {fileID: 919132149155446097, guid: 30f0d9c8e86bcdf43a7aa990f336f544, type: 3}
+  classLeftArm: {fileID: 919132149155446097, guid: 3da3c69cc04ba9240adfe4e370a7b08c, type: 3}
+  classRightLeg: {fileID: 919132149155446097, guid: 7ff52925b35baf14797e6ec960f98d5c, type: 3}
+  classLeftLeg: {fileID: 919132149155446097, guid: 7ff52925b35baf14797e6ec960f98d5c, type: 3}
