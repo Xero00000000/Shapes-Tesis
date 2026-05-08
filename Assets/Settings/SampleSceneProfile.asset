@@ -18,7 +18,7 @@ MonoBehaviour:
     m_Value: 0
   threshold:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 6.75
   intensity:
     m_OverrideState: 1
     m_Value: 0.25
@@ -309,20 +309,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   intensity:
-    m_OverrideState: 0
-    m_Value: -0.83
+    m_OverrideState: 1
+    m_Value: 0
   xMultiplier:
-    m_OverrideState: 1
-    m_Value: 1
+    m_OverrideState: 0
+    m_Value: 0
   yMultiplier:
-    m_OverrideState: 1
-    m_Value: 1
+    m_OverrideState: 0
+    m_Value: 0
   center:
     m_OverrideState: 1
     m_Value: {x: 0.5, y: 0.5}
   scale:
-    m_OverrideState: 1
-    m_Value: 1
+    m_OverrideState: 0
+    m_Value: 0.01
 --- !u!114 &8390692360320279103
 MonoBehaviour:
   m_ObjectHideFlags: 3
