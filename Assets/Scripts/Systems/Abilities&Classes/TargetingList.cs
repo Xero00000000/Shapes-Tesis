@@ -14,6 +14,8 @@ class SelfTargeting : TargetingStrategy
         {
             ability.Execute(target);
         }
+
+        Debug.Log($"anda 3");
     }
 }
 

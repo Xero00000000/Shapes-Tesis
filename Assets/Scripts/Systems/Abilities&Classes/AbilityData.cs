@@ -26,6 +26,7 @@ class AbilityData : ScriptableObject
         {
             targetingStrategy.Start(this, targetingManager);
         }
+        Debug.Log($"anda 1");
     }
 
     void OnEnable()
@@ -53,6 +54,7 @@ class AbilityData : ScriptableObject
                 runtimeEffect.Apply(target);
             }*/
         }
+        Debug.Log($"anda 2");
     }
 
     void HandleVFX(IDamageable target)
