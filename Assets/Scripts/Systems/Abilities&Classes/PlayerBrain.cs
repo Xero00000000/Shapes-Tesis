@@ -1,13 +1,14 @@
+using ImprovedTimers;
+using UnityEditor.Playables;
 using UnityEngine;
 using UnityUtils;
-using ImprovedTimers;
 
 [RequireComponent(typeof(TargetingManager))]
 class PlayerBrain : MonoBehaviour
 {
     [SerializeField] TargetingManager targetingManager;
     [SerializeField] InputReader input;
-    bool isUsingAbility;
+    bool isUsingAbility = false;
     Vector2 moveInput;
     [SerializeField] float moveSpeed;
     [SerializeField] Transform playerModel;
@@ -63,7 +64,7 @@ class PlayerBrain : MonoBehaviour
         
         input.UtilityAbility += IsUtilityAbilityPressed =>
         {
-            if (IsUtilityAbilityPressed)
+            if (IsUtilityAbilityPressed && isUsingAbility == false)
             {
                 Cast(head, 1);
             }
@@ -74,7 +75,7 @@ class PlayerBrain : MonoBehaviour
         };
         input.DefensiveAbility += IsDefensiveAbilityPressed =>
         {
-            if (IsDefensiveAbilityPressed)
+            if (IsDefensiveAbilityPressed && isUsingAbility == false)
             {
                 Cast(torso, 2);
             }
@@ -85,7 +86,7 @@ class PlayerBrain : MonoBehaviour
         };
         input.OfensiveAbility += IsOfensiveAbilityPressed =>
         {
-            if (IsOfensiveAbilityPressed)
+            if (IsOfensiveAbilityPressed && isUsingAbility == false)
             {
                 Cast(arms, 3);
             }
@@ -96,7 +97,7 @@ class PlayerBrain : MonoBehaviour
         };
         input.MoveAbility += IsMoveAbilityPressed =>
         {
-            if (IsMoveAbilityPressed)
+            if (IsMoveAbilityPressed && isUsingAbility == false)
             {
                 Cast(legs, 4);
             }
@@ -107,7 +108,7 @@ class PlayerBrain : MonoBehaviour
         };
         input.PrimaryAttack += IsPrimaryAttackPressed =>
         {
-            if (IsPrimaryAttackPressed)
+            if (IsPrimaryAttackPressed && isUsingAbility == false)
             {
                 Cast(weapon, 5);
             }
@@ -118,7 +119,7 @@ class PlayerBrain : MonoBehaviour
         };
         input.SecondaryAttack += IsSecondaryAttackPressed =>
         {
-            if (IsSecondaryAttackPressed)
+            if (IsSecondaryAttackPressed && isUsingAbility == false)
             {
                 Cast(weapon, 6);
             }
@@ -134,39 +135,44 @@ class PlayerBrain : MonoBehaviour
 
     public void Cast(ClassData classAbility, int partAbility)
     {
+        AbilityData ability = null;
+
         switch (partAbility)
         {
-            case 1:
-                castTimer = new CountdownTimer(classAbility.headAbility.castTime);
-                //castTimer.OnTimerStart = () => ?;
-                castTimer.OnTimerStop = () => classAbility.headAbility.Target(targetingManager);
-                break;
-            case 2:
-                castTimer = new CountdownTimer(classAbility.headAbility.castTime);
-                //castTimer.OnTimerStart = () => ?;
-                castTimer.OnTimerStop = () => classAbility.torsoAbility.Target(targetingManager);
-                break;
-            case 3:
-                castTimer = new CountdownTimer(classAbility.headAbility.castTime);
-                //castTimer.OnTimerStart = () => ?;
-                castTimer.OnTimerStop = () => classAbility.armsAbility.Target(targetingManager);
-                break;
-            case 4:
-                castTimer = new CountdownTimer(classAbility.headAbility.castTime);
-                //castTimer.OnTimerStart = () => ?;
-                castTimer.OnTimerStop = () => classAbility.legsAbility.Target(targetingManager);
-                break;
-            case 5:
-                castTimer = new CountdownTimer(classAbility.headAbility.castTime);
-                //castTimer.OnTimerStart = () => ?;
-                castTimer.OnTimerStop = () => classAbility.primaryAttack.Target(targetingManager);
-                break;
-            case 6:
-                castTimer = new CountdownTimer(classAbility.headAbility.castTime);
-                //castTimer.OnTimerStart = () => ?;
-                castTimer.OnTimerStop = () => classAbility.secondaryAttack.Target(targetingManager);
-                break;
+            case 1: ability = classAbility.headAbility; break;
+            case 2: ability = classAbility.torsoAbility; break;
+            case 3: ability = classAbility.armsAbility; break;
+            case 4: ability = classAbility.legsAbility; break;
+            case 5: ability = classAbility.primaryAttack; break;
+            case 6: ability = classAbility.secondaryAttack; break;
         }
+
+        if (ability = null)
+        {
+            return;
+        }
+        
+        if (ability.castTime == 0)
+        {
+            ability.Target(targetingManager);
+            return;
+        }
+
+        if (castTimer != null)
+        {
+            try { castTimer.Stop(); } catch { }
+            castTimer = null;
+        }
+
+        castTimer = new CountdownTimer(ability.castTime);
+        castTimer.OnTimerStart = () => isUsingAbility = true;
+        castTimer.Start();
+        castTimer.OnTimerStop = () =>
+        {
+            isUsingAbility = false;
+            ability.Target(targetingManager);
+        };
+        
     }
 
     //tambien temporal

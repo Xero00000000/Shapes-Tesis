@@ -15,7 +15,6 @@ class AbilityData : ScriptableObject
     [SerializeField] GameObject castVisualEffect;
     [SerializeField] GameObject runningVisualEffect;
 
-    //[Header("Effects")]
     [SerializeReference] public List<IEffectFactory<IDamageable>> effects;
 
     [Header("Targeting")]
@@ -47,11 +46,11 @@ class AbilityData : ScriptableObject
             /*
             if (target is EnemyBrainTest enemy)
             {
-                enemy.ApplyEffect(effect);
+                enemy.ApplyEffect(runtimeEffect);
             }
             else
             {
-                effect.Apply(target);
+                runtimeEffect.Apply(target);
             }*/
         }
     }
@@ -76,14 +75,27 @@ class AbilityData : ScriptableObject
     {
         var targetMb = target as MonoBehaviour;
         if (targetMb == null) return;
-        
-        AudioSource.PlayClipAtPoint(castSoundEffect, targetMb.transform.position);
+
+        if (castSoundEffect != null)
+        {
+            AudioSource.PlayClipAtPoint(castSoundEffect, targetMb.transform.position);
+        }
+    }
+}
+
+class TestEffectFactory : IEffectFactory<IDamageable>
+{
+    //[SerializeField] private GameObject player;
+
+    public IAbilityEffect<IDamageable> Create()
+    {
+        return new TestEffect { /*player = player*/ };
     }
 }
 
 class TestEffect : IAbilityEffect<IDamageable>
 {
-    [SerializeField] private GameObject player;
+    //public GameObject player;
 
     public event Action<IAbilityEffect<IDamageable>> OnCompleted;
 
