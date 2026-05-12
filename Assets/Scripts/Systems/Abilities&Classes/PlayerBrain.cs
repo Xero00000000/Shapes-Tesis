@@ -147,10 +147,12 @@ class PlayerBrain : MonoBehaviour
             case 6: ability = classAbility.secondaryAttack; break;
         }
 
-        if (ability = null)
+        if (ability == null)
         {
             return;
         }
+
+        //float castTime = ability.castTime;
         
         if (ability.castTime == 0)
         {
