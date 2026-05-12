@@ -15,11 +15,11 @@ MonoBehaviour:
   label: Mago
   passiveAbility: {fileID: 0}
   headAbility: {fileID: 11400000, guid: e20eaa68c3ab8da46aa6510c71f3d34d, type: 2}
-  armsAbility: {fileID: 11400000, guid: ba4e81344986ed646b5472e800f2043f, type: 2}
-  torsoAbility: {fileID: 11400000, guid: ba4e81344986ed646b5472e800f2043f, type: 2}
-  legsAbility: {fileID: 11400000, guid: ba4e81344986ed646b5472e800f2043f, type: 2}
-  primaryAttack: {fileID: 11400000, guid: ba4e81344986ed646b5472e800f2043f, type: 2}
-  secondaryAttack: {fileID: 11400000, guid: ba4e81344986ed646b5472e800f2043f, type: 2}
+  armsAbility: {fileID: 11400000, guid: e20eaa68c3ab8da46aa6510c71f3d34d, type: 2}
+  torsoAbility: {fileID: 11400000, guid: e20eaa68c3ab8da46aa6510c71f3d34d, type: 2}
+  legsAbility: {fileID: 11400000, guid: e20eaa68c3ab8da46aa6510c71f3d34d, type: 2}
+  primaryAttack: {fileID: 11400000, guid: e20eaa68c3ab8da46aa6510c71f3d34d, type: 2}
+  secondaryAttack: {fileID: 11400000, guid: e20eaa68c3ab8da46aa6510c71f3d34d, type: 2}
   hpModifier: 5
   energy: 5
   physicalDefense: 5
