@@ -21,7 +21,7 @@ class ProjectileController : MonoBehaviour
         if (other.CompareTag("Player")) return;
         if (other.gameObject.TryGetComponent<IDamageable>(out var target))
         {
-            ability.Execute(target);
+            ability.Execute(target, this.gameObject, Vector3.zero);
             Destroy(gameObject);
         }/*
         else

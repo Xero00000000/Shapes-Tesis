@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3996090728934172126}
   - component: {fileID: 6076810454251348094}
   - component: {fileID: 9067668752857119297}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,6 +154,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FireBall (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d3d37fd6729a68a4c8626cf5143ee27e, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -231,6 +235,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: d3d37fd6729a68a4c8626cf5143ee27e, type: 3}
       propertyPath: m_Name
       value: FireBall
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d3d37fd6729a68a4c8626cf5143ee27e, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

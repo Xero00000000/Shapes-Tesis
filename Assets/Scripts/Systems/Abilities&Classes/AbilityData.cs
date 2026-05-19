@@ -15,16 +15,16 @@ class AbilityData : ScriptableObject
     [SerializeField] GameObject castVisualEffect;
     [SerializeField] GameObject runningVisualEffect;
 
-    [SerializeReference] public List<IEffectFactory<IDamageable>> effects;
+    [SerializeReference] public List<IEffectFactory<IDamageable, GameObject, Vector3>> effects;
 
     [Header("Targeting")]
     [SerializeReference] TargetingStrategy targetingStrategy;
 
-    public void Target(TargetingManager targetingManager)
+    public void Target(TargetingManager targetingManager, GameObject caster, Vector3 point)
     {
         if (targetingStrategy != null)
         {
-            targetingStrategy.Start(this, targetingManager);
+            targetingStrategy.Start(this, targetingManager, caster, point);
         }
         Debug.Log($"anda 1");
     }
@@ -32,10 +32,10 @@ class AbilityData : ScriptableObject
     void OnEnable()
     {
         if (string.IsNullOrEmpty(label)) label = name;
-        if (effects == null) effects = new List<IEffectFactory<IDamageable>>();
+        if (effects == null) effects = new List<IEffectFactory<IDamageable, GameObject, Vector3>>();
     }
 
-    public void Execute(IDamageable target)
+    public void Execute(IDamageable target, GameObject caster, Vector3 point)
     {
         HandleVFX(target);
         HandleSFX(target);
@@ -85,23 +85,23 @@ class AbilityData : ScriptableObject
     }
 }
 
-class TestEffectFactory : IEffectFactory<IDamageable>
+class TestEffectFactory : IEffectFactory<IDamageable, GameObject, Vector3>
 {
     //[SerializeField] private GameObject player;
 
-    public IAbilityEffect<IDamageable> Create()
+    public IAbilityEffect<IDamageable, GameObject, Vector3> Create()
     {
         return new TestEffect { /*player = player*/ };
     }
 }
 
-class TestEffect : IAbilityEffect<IDamageable>
+class TestEffect : IAbilityEffect<IDamageable, GameObject, Vector3>
 {
     //public GameObject player;
 
-    public event Action<IAbilityEffect<IDamageable>> OnCompleted;
+    public event Action<IAbilityEffect<IDamageable, GameObject, Vector3>> OnCompleted;
 
-    public void Apply(IDamageable target)
+    public void Apply(IDamageable target, GameObject caster, Vector3 point)
     {
         GameObject spawnPlace = GameObject.Find("bullshitspawn");
         GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -116,13 +116,13 @@ class TestEffect : IAbilityEffect<IDamageable>
     }
 }
 
-class TestEffectOne : IAbilityEffect<IDamageable>
+class TestEffectOne : IAbilityEffect<IDamageable, GameObject, Vector3>
 {
     [SerializeField] private GameObject player;
 
-    public event Action<IAbilityEffect<IDamageable>> OnCompleted;
+    public event Action<IAbilityEffect<IDamageable, GameObject, Vector3>> OnCompleted;
 
-    public void Apply(IDamageable target)
+    public void Apply(IDamageable target, GameObject caster, Vector3 point)
     {
         GameObject spawnPlace = GameObject.Find("bullshitspawn");
         GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Capsule);

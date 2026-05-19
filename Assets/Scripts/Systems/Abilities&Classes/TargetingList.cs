@@ -5,14 +5,15 @@ using UnityUtils;
 
 class SelfTargeting : TargetingStrategy
 {
-    public override void Start(AbilityData ability, TargetingManager targetingManager)
+    public override void Start(AbilityData ability, TargetingManager targetingManager, GameObject caster, Vector3 point)
     {
         this.ability = ability;
         this.targetingManager = targetingManager;
+        
 
         if (targetingManager.transform.TryGetComponent<IDamageable>(out var target))
         {
-            ability.Execute(target);
+            ability.Execute(target, caster, point);
         }
 
         Debug.Log($"anda 3");
@@ -24,10 +25,11 @@ class AOETargeting : TargetingStrategy
     [SerializeField] GameObject aoePrefab;
     [SerializeField] float aoeRadius;
     [SerializeField] LayerMask groundLayerMask;
+    [SerializeField] float heightOffset;
 
     GameObject previewInstance;
 
-    public override void Start(AbilityData ability, TargetingManager targetingManager)
+    public override void Start(AbilityData ability, TargetingManager targetingManager, GameObject caster, Vector3 point)
     {
         this.ability = ability;
         this.targetingManager = targetingManager;
@@ -38,7 +40,7 @@ class AOETargeting : TargetingStrategy
 
         if (aoePrefab != null)
         {
-            previewInstance = UnityEngine.Object.Instantiate(aoePrefab, targetingManager.mouseWorldPosition + new Vector3(0f, 0.1f, 0f), Quaternion.identity);
+            previewInstance = UnityEngine.Object.Instantiate(aoePrefab, targetingManager.mouseWorldPosition + new Vector3(0f, heightOffset, 0f), Quaternion.identity);
         }
 
         if (targetingManager.input != null)
@@ -47,7 +49,7 @@ class AOETargeting : TargetingStrategy
             {
                 if (IsPrimaryAttackPressed)
                 {
-                    OnClick();
+                    OnClick(caster, point);
                 }
                 else
                 {
@@ -61,7 +63,8 @@ class AOETargeting : TargetingStrategy
     {
         if (!IsTargetting || previewInstance == null) return;
 
-        previewInstance.transform.position = targetingManager.mouseWorldPosition + new Vector3(0f, 0.1f, 0f);
+        previewInstance.transform.position = targetingManager.mouseWorldPosition + new Vector3(0f, heightOffset, 0f);
+        previewInstance.transform.rotation = targetingManager.lookRotation;
     }
 
     public override void Cancel()
@@ -82,7 +85,7 @@ class AOETargeting : TargetingStrategy
         //targetingManager.input.PrimaryAttack -= IsPrimaryAttackPressed => { };
     }
 
-    void OnClick()
+    void OnClick(GameObject caster, Vector3 point)
     {
         if (isTargetting)
         {
@@ -92,7 +95,7 @@ class AOETargeting : TargetingStrategy
 
             foreach (var target in targets)
             {
-                ability.Execute(target);
+                ability.Execute(target, caster, point);
             }
 
             Cancel();
@@ -105,7 +108,7 @@ class ProjectileTargeting : TargetingStrategy
     public GameObject projectilePrefab;
     public float projectileSpeed;
     public float projectileLifetime;
-    public override void Start(AbilityData ability, TargetingManager targetingManager)
+    public override void Start(AbilityData ability, TargetingManager targetingManager, GameObject caster, Vector3 point)
     {
         this.ability = ability;
         this.targetingManager = targetingManager;
@@ -131,10 +134,99 @@ class ConjureAOETargeting : TargetingStrategy
     [SerializeField] float aoeRadius;
     [SerializeField] LayerMask groundLayerMask;
     [SerializeField] float aoeLifetime;
+    [SerializeField] float heightOffset;
 
     GameObject previewInstance;
 
-    public override void Start(AbilityData ability, TargetingManager targetingManager)
+    public override void Start(AbilityData ability, TargetingManager targetingManager, GameObject caster, Vector3 point)
+    {
+        this.ability = ability;
+        this.targetingManager = targetingManager;
+        isTargetting = true;
+        targetingManager.isTargetting = true;
+
+        targetingManager.SetCurrentStrategy(this);
+
+        if (previewPrefab != null)
+        {
+            previewInstance = UnityEngine.Object.Instantiate(previewPrefab, targetingManager.mouseWorldPosition + new Vector3(0f, heightOffset, 0f), targetingManager.lookRotation);
+        }
+
+        if (targetingManager.input != null)
+        {//despues veo como mierda hago un raycast event y simplifico
+            targetingManager.input.PrimaryAttack += IsPrimaryAttackPressed =>
+            {
+                if (IsPrimaryAttackPressed)
+                {
+                    OnClick(caster, point);
+                }
+                else
+                {
+
+                }
+            };
+        }
+    }
+
+    public override void Update()
+    {
+        if (!IsTargetting || previewInstance == null) return;
+
+        previewInstance.transform.position = targetingManager.mouseWorldPosition + new Vector3(0f, heightOffset, 0f);
+        previewInstance.transform.rotation = targetingManager.lookRotation;
+    }
+
+    public override void Cancel()
+    {
+        isTargetting = false;
+        targetingManager.isTargetting = false;
+
+        targetingManager.ClearCurrentStrategy();
+
+        if (previewInstance != null)
+        {
+            UnityEngine.Object.Destroy(previewInstance);
+        }
+        /*if (targetingManager.input != null)
+        {
+            targetingManager.input.PrimaryAttack -= Onclick;
+        }*/
+        //targetingManager.input.PrimaryAttack -= IsPrimaryAttackPressed => { };
+    }
+
+    void OnClick(GameObject caster, Vector3 point)
+    {
+        if (isTargetting)
+        {/*
+            var targets = Physics.OverlapSphere(targetingManager.mouseWorldPosition, aoeRadius)
+                .Select(c => c.GetComponent<IDamageable>())
+                .OfType<IDamageable>();
+
+            foreach (var target in targets)
+            {
+                ability.Execute(target);
+            }*/
+            var conjuration = Object.Instantiate(conjurePrefab, targetingManager.mouseWorldPosition + new Vector3(0f, heightOffset, 0f), targetingManager.lookRotation);
+            conjuration.GetComponent<AOEController>().Initialize(ability, aoeLifetime);
+
+
+            Cancel();
+        }
+        
+    }
+}
+
+class PointTargeting : TargetingStrategy
+{
+    [SerializeField] GameObject conjurePrefab;
+    [SerializeField] GameObject previewPrefab;
+    [SerializeField] float aoeRadius;
+    [SerializeField] LayerMask groundLayerMask;
+    [SerializeField] float aoeLifetime;
+
+    GameObject previewInstance;
+
+    public override void Start(AbilityData ability, TargetingManager targetingManager, GameObject caster, Vector3 point)
     {
         this.ability = ability;
         this.targetingManager = targetingManager;
@@ -154,7 +246,7 @@ class ConjureAOETargeting : TargetingStrategy
             {
                 if (IsPrimaryAttackPressed)
                 {
-                    OnClick();
+                    OnClick(caster, point);
                 }
                 else
                 {
@@ -189,7 +281,7 @@ class ConjureAOETargeting : TargetingStrategy
         //targetingManager.input.PrimaryAttack -= IsPrimaryAttackPressed => { };
     }
 
-    void OnClick()
+    void OnClick(GameObject caster, Vector3 point)
     {
         if (isTargetting)
         {/*
@@ -207,6 +299,6 @@ class ConjureAOETargeting : TargetingStrategy
 
             Cancel();
         }
-        
+
     }
 }

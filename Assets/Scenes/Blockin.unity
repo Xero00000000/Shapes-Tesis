@@ -45815,6 +45815,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 822561264}
     m_Modifications:
+    - target: {fileID: 1844403765796730549, guid: d36360364a48d314d8f865b8c6c92fa0, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2822084049799950950, guid: d36360364a48d314d8f865b8c6c92fa0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -45862,6 +45866,14 @@ PrefabInstance:
     - target: {fileID: 6870537188907432410, guid: d36360364a48d314d8f865b8c6c92fa0, type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6892564106506989564, guid: d36360364a48d314d8f865b8c6c92fa0, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8112357114433727281, guid: d36360364a48d314d8f865b8c6c92fa0, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

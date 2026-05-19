@@ -38,3 +38,4 @@ MonoBehaviour:
           serializedVersion: 2
           m_Bits: 512
         aoeLifetime: 5
+        heightOffset: 3.7

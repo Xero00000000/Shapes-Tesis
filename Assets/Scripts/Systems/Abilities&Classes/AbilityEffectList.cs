@@ -5,23 +5,23 @@ using ImprovedTimers;
 using UnityEngine;
 
 
-class InstantDamageFactory : IEffectFactory<IDamageable>
+class InstantDamageFactory : IEffectFactory<IDamageable, GameObject, Vector3>
 {
     [SerializeField] float damageValue;
 
-    public IAbilityEffect<IDamageable> Create()
+    public IAbilityEffect<IDamageable, GameObject, Vector3> Create()
     {
         return new InstantDamage { damageValue = damageValue };
     }
 }
 
-class DamageOverTimeFactory : IEffectFactory<IDamageable>
+class DamageOverTimeFactory : IEffectFactory<IDamageable, GameObject, Vector3>
 {
     [SerializeField] float duration;
     [SerializeField] float tickInterval;
     [SerializeField] float damagePerTick;
 
-    public IAbilityEffect<IDamageable> Create()
+    public IAbilityEffect<IDamageable, GameObject, Vector3> Create()
     {
         return new DamageOverTimeEffect
         {
@@ -32,13 +32,13 @@ class DamageOverTimeFactory : IEffectFactory<IDamageable>
     }
 }
 
-struct InstantDamage : IAbilityEffect<IDamageable>
+struct InstantDamage : IAbilityEffect<IDamageable, GameObject, Vector3>
 {
     public float damageValue;
 
-    public event Action<IAbilityEffect<IDamageable>> OnCompleted;
+    public event Action<IAbilityEffect<IDamageable, GameObject, Vector3>> OnCompleted;
 
-    public void Apply(IDamageable target)
+    public void Apply(IDamageable target, GameObject caster, Vector3 point)
     {
         target.TakeDamage(damageValue);
         OnCompleted?.Invoke(this);
@@ -50,7 +50,7 @@ struct InstantDamage : IAbilityEffect<IDamageable>
 }
 
 
-struct DamageOverTimeEffect : IAbilityEffect<IDamageable>
+struct DamageOverTimeEffect : IAbilityEffect<IDamageable, GameObject, Vector3>
 {
     public float duration;
     public float tickInterval;
@@ -59,9 +59,9 @@ struct DamageOverTimeEffect : IAbilityEffect<IDamageable>
     IntervalTimer timer;
     IDamageable currentTarget;
 
-    public event Action<IAbilityEffect<IDamageable>> OnCompleted;
+    public event Action<IAbilityEffect<IDamageable, GameObject, Vector3>> OnCompleted;
 
-    public void Apply(IDamageable target)
+    public void Apply(IDamageable target, GameObject caster, Vector3 point)
     {
         currentTarget = target;
         timer = new IntervalTimer(duration, tickInterval);
@@ -85,5 +85,28 @@ struct DamageOverTimeEffect : IAbilityEffect<IDamageable>
         timer = null;
         currentTarget = null;
         OnCompleted?.Invoke(this);
+    }
+}
+
+struct Teleport : IAbilityEffect<IDamageable, GameObject, Vector3>
+{
+
+    public event Action<IAbilityEffect<IDamageable, GameObject, Vector3>> OnCompleted;
+
+    public void Apply(IDamageable target, GameObject caster, Vector3 point)
+    {
+        caster.transform.position = point;
+        OnCompleted?.Invoke(this);
+    }
+    public void Cancel()
+    {
+        OnCompleted?.Invoke(this);
+    }
+}
+class TeleportFactory : IEffectFactory<IDamageable, GameObject, Vector3>
+{
+    public IAbilityEffect<IDamageable, GameObject, Vector3> Create()
+    {
+        return new Teleport {  };
     }
 }

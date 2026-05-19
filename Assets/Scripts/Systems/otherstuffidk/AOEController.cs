@@ -21,7 +21,7 @@ class AOEController : MonoBehaviour
         //if (other.CompareTag("Player")) return;
         if (other.gameObject.TryGetComponent<IDamageable>(out var target))
         {
-            ability.Execute(target);
+            ability.Execute(target, this.gameObject, Vector3.zero);//despues modificar esto para que mantenga las referencias de caster y eso
             Destroy(gameObject);
         }
     }

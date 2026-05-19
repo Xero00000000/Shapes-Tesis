@@ -17,11 +17,16 @@ MonoBehaviour:
   castSoundEffect: {fileID: 0}
   castVisualEffect: {fileID: 0}
   runningVisualEffect: {fileID: 0}
-  effects: []
+  effects:
+  - rid: 7265136773923078212
   targetingStrategy:
-    rid: -2
+    rid: 7265136773923078213
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 7265136773923078212
+      type: {class: TeleportFactory, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 7265136773923078213
+      type: {class: SelfTargeting, ns: , asm: Assembly-CSharp}
+      data: 

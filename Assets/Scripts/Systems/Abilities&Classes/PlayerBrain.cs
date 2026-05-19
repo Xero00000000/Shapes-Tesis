@@ -1,5 +1,7 @@
 using ImprovedTimers;
-using UnityEditor.Playables;
+using Unity.VisualScripting;
+
+//using UnityEditor.Playables;
 using UnityEngine;
 using UnityUtils;
 
@@ -156,7 +158,7 @@ class PlayerBrain : MonoBehaviour
         
         if (ability.castTime == 0)
         {
-            ability.Target(targetingManager);
+            ability.Target(targetingManager, this.gameObject, targetingManager.mouseWorldPosition);
             return;
         }
 
@@ -172,7 +174,7 @@ class PlayerBrain : MonoBehaviour
         castTimer.OnTimerStop = () =>
         {
             isUsingAbility = false;
-            ability.Target(targetingManager);
+            ability.Target(targetingManager, this.gameObject, targetingManager.mouseWorldPosition);
         };
         
     }
@@ -351,27 +353,27 @@ class PlayerBrain : MonoBehaviour
 
     public void UtilityAbility(IDamageable target)
     {
-        head.headAbility.Execute(target);
+        head.headAbility.Execute(target, this.gameObject, targetingManager.mouseWorldPosition);
     }
     public void DefenseAbility(IDamageable target)
     {
-        torso.torsoAbility.Execute(target);
+        torso.torsoAbility.Execute(target, this.gameObject, targetingManager.mouseWorldPosition);
     }
     public void OffenseAbility(IDamageable target)
     {
-        arms.armsAbility.Execute(target);
+        arms.armsAbility.Execute(target, this.gameObject, targetingManager.mouseWorldPosition);
     }
     public void MovementAbility(IDamageable target)
     {
-        legs.legsAbility.Execute(target);
+        legs.legsAbility.Execute(target, this.gameObject, targetingManager.mouseWorldPosition);
     }
     public void PrimaryAttack(IDamageable target)
     {
-        weapon.primaryAttack.Execute(target);
+        weapon.primaryAttack.Execute(target, this.gameObject, targetingManager.mouseWorldPosition);
     }
     public void SecondaryAttack(IDamageable target)
     {
-        weapon.secondaryAttack.Execute(target);
+        weapon.secondaryAttack.Execute(target, this.gameObject, targetingManager.mouseWorldPosition);
     }
 
 }

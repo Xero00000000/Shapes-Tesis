@@ -6,7 +6,7 @@ using System.Linq;
 using System.Collections.Generic;
 
 
-[CustomPropertyDrawer(typeof(IEffectFactory<IDamageable>), true)]
+[CustomPropertyDrawer(typeof(IEffectFactory<IDamageable, GameObject, Vector3>), true)]
 public class EffectFactoryDrawer : PropertyDrawer
 {
     static Dictionary<string, Type> typeMap;
@@ -63,7 +63,7 @@ public class EffectFactoryDrawer : PropertyDrawer
 
     static void BuildTypeMap()
     {
-        var baseType = typeof(IEffectFactory<IDamageable>);
+        var baseType = typeof(IEffectFactory<IDamageable, GameObject, Vector3>);
         typeMap = AppDomain.CurrentDomain.GetAssemblies()
             .SelectMany(asm =>
             {
@@ -82,7 +82,7 @@ public class EffectFactoryDrawer : PropertyDrawer
     }
 }
 
-[CustomPropertyDrawer(typeof(IAbilityEffect<IDamageable>), true)]
+[CustomPropertyDrawer(typeof(IAbilityEffect<IDamageable, GameObject, Vector3>), true)]
 public class AbilityEffectDrawer : PropertyDrawer
 {
     static Dictionary<string, Type> typeMap;
@@ -139,7 +139,7 @@ public class AbilityEffectDrawer : PropertyDrawer
 
     static void BuildTypeMap()
     {
-        var baseType = typeof(IAbilityEffect<IDamageable>);
+        var baseType = typeof(IAbilityEffect<IDamageable, GameObject, Vector3>);
         typeMap = AppDomain.CurrentDomain.GetAssemblies()
             .SelectMany(asm =>
             {

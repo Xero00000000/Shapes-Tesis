@@ -6,18 +6,18 @@ using UnityEngine;
 public interface IDamageable
 {
     void TakeDamage(float amount);
-    void ApplyEffect(IAbilityEffect<IDamageable> effect);
+    void ApplyEffect(IAbilityEffect<IDamageable, GameObject, Vector3> effect);
 }
 
-public interface IAbilityEffect<TTarget>
+public interface IAbilityEffect<TTarget, TCaster, TPoint>
 {
-    public abstract void Apply(TTarget target);
+    public abstract void Apply(TTarget target, TCaster caster, TPoint point);
     public abstract void Cancel();
-    public abstract event Action<IAbilityEffect<TTarget>> OnCompleted;
+    public abstract event Action<IAbilityEffect<TTarget, TCaster, TPoint>> OnCompleted;
 }
 
-interface IEffectFactory<TTarget>
+interface IEffectFactory<TTarget, TCaster, TPoint>
 {
-    IAbilityEffect<TTarget> Create();
+    IAbilityEffect<TTarget, TCaster, TPoint> Create();
 }
 

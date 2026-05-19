@@ -32,6 +32,8 @@ MonoBehaviour:
         groundLayerMask:
           serializedVersion: 2
           m_Bits: 512
+        heightOffset: 3.7
+        previewInstance: {fileID: 0}
     - rid: 2697675302762971229
       type: {class: InstantDamageFactory, ns: , asm: Assembly-CSharp}
       data:
