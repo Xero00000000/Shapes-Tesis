@@ -64,7 +64,7 @@ class PlayerBrain : MonoBehaviour
         
         input.UtilityAbility += IsUtilityAbilityPressed =>
         {
-            if (IsUtilityAbilityPressed && isUsingAbility == false)
+            if (IsUtilityAbilityPressed && isUsingAbility == false && targetingManager.isTargetting == false)
             {
                 Cast(head, 1);
             }
@@ -75,7 +75,7 @@ class PlayerBrain : MonoBehaviour
         };
         input.DefensiveAbility += IsDefensiveAbilityPressed =>
         {
-            if (IsDefensiveAbilityPressed && isUsingAbility == false)
+            if (IsDefensiveAbilityPressed && isUsingAbility == false && targetingManager.isTargetting == false)
             {
                 Cast(torso, 2);
             }
@@ -86,7 +86,7 @@ class PlayerBrain : MonoBehaviour
         };
         input.OfensiveAbility += IsOfensiveAbilityPressed =>
         {
-            if (IsOfensiveAbilityPressed && isUsingAbility == false)
+            if (IsOfensiveAbilityPressed && isUsingAbility == false && targetingManager.isTargetting == false)
             {
                 Cast(arms, 3);
             }
@@ -97,7 +97,7 @@ class PlayerBrain : MonoBehaviour
         };
         input.MoveAbility += IsMoveAbilityPressed =>
         {
-            if (IsMoveAbilityPressed && isUsingAbility == false)
+            if (IsMoveAbilityPressed && isUsingAbility == false && targetingManager.isTargetting == false)
             {
                 Cast(legs, 4);
             }
@@ -108,7 +108,7 @@ class PlayerBrain : MonoBehaviour
         };
         input.PrimaryAttack += IsPrimaryAttackPressed =>
         {
-            if (IsPrimaryAttackPressed && isUsingAbility == false)
+            if (IsPrimaryAttackPressed && isUsingAbility == false && targetingManager.isTargetting == false)
             {
                 Cast(weapon, 5);
             }
@@ -119,7 +119,7 @@ class PlayerBrain : MonoBehaviour
         };
         input.SecondaryAttack += IsSecondaryAttackPressed =>
         {
-            if (IsSecondaryAttackPressed && isUsingAbility == false)
+            if (IsSecondaryAttackPressed && isUsingAbility == false && targetingManager.isTargetting == false)
             {
                 Cast(weapon, 6);
             }
@@ -192,6 +192,7 @@ class PlayerBrain : MonoBehaviour
             {
                 Quaternion lookRotation = Quaternion.LookRotation(direction);
                 transform.rotation = Quaternion.Euler(0f, lookRotation.eulerAngles.y, 0f);
+                targetingManager.lookRotation = Quaternion.LookRotation(direction);
             }
 
             targetingManager.mouseWorldPosition = mouseWorldPosition;

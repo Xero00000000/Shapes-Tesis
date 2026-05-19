@@ -27,8 +27,9 @@ MonoBehaviour:
     - rid: 2697674977833386095
       type: {class: ProjectileTargeting, ns: , asm: Assembly-CSharp}
       data:
-        projectilePrefab: {fileID: 0}
+        projectilePrefab: {fileID: 6614440148226581386, guid: 514762b7f4bf54940b2d46891958b609, type: 3}
         projectileSpeed: 5
+        projectileLifetime: 3
     - rid: 2697674977833386096
       type: {class: InstantDamageFactory, ns: , asm: Assembly-CSharp}
       data:

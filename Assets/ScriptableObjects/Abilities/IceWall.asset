@@ -13,19 +13,28 @@ MonoBehaviour:
   m_Name: IceWall
   m_EditorClassIdentifier: 
   label: IceWall
+  castTime: 0
   castSoundEffect: {fileID: 0}
   castVisualEffect: {fileID: 0}
   runningVisualEffect: {fileID: 0}
   effects:
-  - rid: 2697674977833386064
+  - rid: 2697675302762971217
   targetingStrategy:
-    rid: -2
+    rid: 2697675302762971223
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 2697674977833386064
-      type: {class: TestEffect, ns: , asm: Assembly-CSharp}
+    - rid: 2697675302762971217
+      type: {class: InstantDamageFactory, ns: , asm: Assembly-CSharp}
       data:
-        player: {fileID: 0}
+        damageValue: 1
+    - rid: 2697675302762971223
+      type: {class: ConjureAOETargeting, ns: , asm: Assembly-CSharp}
+      data:
+        conjurePrefab: {fileID: 5899332760189748542, guid: 6d20599b351073448a870ee8aa68981a, type: 3}
+        previewPrefab: {fileID: 5899332760189748542, guid: 6d20599b351073448a870ee8aa68981a, type: 3}
+        aoeRadius: 3
+        groundLayerMask:
+          serializedVersion: 2
+          m_Bits: 512
+        aoeLifetime: 5

@@ -5,6 +5,8 @@ class TargetingManager : MonoBehaviour
     public InputReader input;
     public Camera cam;
     public Vector3 mouseWorldPosition;
+    public Quaternion lookRotation;
+    public bool isTargetting = false;
 
     TargetingStrategy currentStrategy;
 
