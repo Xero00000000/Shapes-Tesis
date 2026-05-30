@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Shapes.unity
     guid: 07da2d16c9c6463439101c11dc3a5f50
   - enabled: 1
+    path: Assets/Scenes/Gracias.unity
+    guid: 1f373615f3a134c4ebe89b82b397bee0
+  - enabled: 1
     path: Assets/Scenes/Blockin.unity
     guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects:
