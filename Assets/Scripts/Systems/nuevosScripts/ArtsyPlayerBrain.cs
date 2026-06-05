@@ -102,6 +102,7 @@ public class ArtsyPlayerBrain : MonoBehaviour
     //tambien temporal
     public void Update()
     {
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, floorLayer))
         {
