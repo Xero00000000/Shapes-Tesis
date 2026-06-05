@@ -65,6 +65,7 @@ class PlayerBrain : MonoBehaviour
         input.Move += direction => moveInput = direction;
         
         input.UtilityAbility += IsUtilityAbilityPressed =>
+
         {
             if (IsUtilityAbilityPressed && isUsingAbility == false && targetingManager.isTargetting == false)
             {
@@ -201,24 +202,6 @@ class PlayerBrain : MonoBehaviour
         }
         //playerModel.rotation = Quaternion.LookRotation(mouseWorldPosition);
         Move(CalculateMovementDirection());
-
-        /*
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            Execute(head, 1);
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            Execute(torso, 2);
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Execute(arms, 3);
-        }
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            Execute(head, 4);
-        }*/
     }
 
     void Move(Vector3 direction)
