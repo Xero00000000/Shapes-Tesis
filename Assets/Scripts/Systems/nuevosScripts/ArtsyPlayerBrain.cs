@@ -25,12 +25,6 @@ public class ArtsyPlayerBrain : MonoBehaviour
 
     private Mannequin mannequin;
 
-    [SerializeField] private GameObject headOffset;
-    [SerializeField] private GameObject rightArmOffset;
-    [SerializeField] private GameObject leftArmOffset;
-    [SerializeField] private GameObject rightLegOffset;
-    [SerializeField] private GameObject leftLegOffset;
-
     public int currentHead;
     public int currentTorso;
     public int currentArms;
@@ -158,14 +152,14 @@ public class ArtsyPlayerBrain : MonoBehaviour
                 mannequin.SwapPart(partToSwap, currentArms);
                 for (int i = 0; i < headParts.Count; i++)
                 {
-                    headParts[i].SetActive(i == partNumber);
+                    armsParts[i].SetActive(i == partNumber);
                 }
                 break;
             case 4:
                 mannequin.SwapPart(partToSwap, currentLegs);
                 for (int i = 0; i < headParts.Count; i++)
                 {
-                    headParts[i].SetActive(i == partNumber);
+                    legsParts[i].SetActive(i == partNumber);
                 }
                 break;
         }
@@ -177,6 +171,15 @@ public class ArtsyPlayerBrain : MonoBehaviour
         if (other.CompareTag("Mannequin"))
         {
             mannequin = other.GetComponent<Mannequin>();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+
+        if (other.CompareTag("Mannequin") && mannequin == other.GetComponent<Mannequin>())
+        {
+            mannequin = null;
         }
     }
 }

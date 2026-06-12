@@ -11,11 +11,6 @@ using UnityEditor;
 
 public class Mannequin : MonoBehaviour
 {
-    [SerializeField] private GameObject headOffset;
-    [SerializeField] private GameObject rightArmOffset;
-    [SerializeField] private GameObject leftArmOffset;
-    [SerializeField] private GameObject rightLegOffset;
-    [SerializeField] private GameObject leftLegOffset;
 
     public int currentHead;
     public int currentTorso;
@@ -26,6 +21,26 @@ public class Mannequin : MonoBehaviour
     public List<GameObject> torsoParts;
     public List<GameObject> armsParts;
     public List<GameObject> legsParts;
+
+    public void Start()
+    {
+        for (int i = 0; i < headParts.Count; i++)
+        {
+            headParts[i].SetActive(i == currentHead);
+        }
+        for (int i = 0; i < torsoParts.Count; i++)
+        {
+            torsoParts[i].SetActive(i == currentTorso);
+        }
+        for (int i = 0; i < armsParts.Count; i++)
+        {
+            armsParts[i].SetActive(i == currentArms);
+        }
+        for (int i = 0; i < legsParts.Count; i++)
+        {
+            legsParts[i].SetActive(i == currentLegs);
+        }
+    }
 
     public void SwapPart(int partToSwap, int partNumber)
     {
@@ -44,15 +59,15 @@ public class Mannequin : MonoBehaviour
                 }
                 break;
             case 3:
-                for (int i = 0; i < headParts.Count; i++)
+                for (int i = 0; i < armsParts.Count; i++)
                 {
-                    headParts[i].SetActive(i == partNumber);
+                    armsParts[i].SetActive(i == partNumber);
                 }
                 break;
             case 4:
-                for (int i = 0; i < headParts.Count; i++)
+                for (int i = 0; i < legsParts.Count; i++)
                 {
-                    headParts[i].SetActive(i == partNumber);
+                    legsParts[i].SetActive(i == partNumber);
                 }
                 break;
         }
