@@ -21441,11 +21441,12 @@ MonoBehaviour:
   torso: {fileID: 0}
   arms: {fileID: 0}
   legs: {fileID: 0}
-  placeholder1: {fileID: 11400000, guid: 6fad6d4739df15441a8dc26209ebba9b, type: 2}
-  placeholder2: {fileID: 11400000, guid: f25224fa2bff8b542aa5303529760284, type: 2}
-  mage: {fileID: 11400000, guid: eab233cde5383314d9083c961ab146da, type: 2}
-  knight: {fileID: 11400000, guid: 9f3d866d0c21c4b499bc9b9dd2136ace, type: 2}
-  ranger: {fileID: 11400000, guid: 51fe59a302969d14394a8eca91abf537, type: 2}
+  ClassList:
+  - {fileID: 11400000, guid: 6fad6d4739df15441a8dc26209ebba9b, type: 2}
+  - {fileID: 11400000, guid: f25224fa2bff8b542aa5303529760284, type: 2}
+  - {fileID: 11400000, guid: eab233cde5383314d9083c961ab146da, type: 2}
+  - {fileID: 11400000, guid: 9f3d866d0c21c4b499bc9b9dd2136ace, type: 2}
+  - {fileID: 11400000, guid: 51fe59a302969d14394a8eca91abf537, type: 2}
   combatMode: 0
 --- !u!135 &991545956
 SphereCollider:
