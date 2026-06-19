@@ -184,11 +184,12 @@ class ArtsyPlayerBrain : MonoBehaviour
         {
             combatMode = false;
         }
-
+        /*
         head = ClassList[currentHead];
         torso = ClassList[currentTorso];
         arms = ClassList[currentArms];
         legs = ClassList[currentLegs];
+        */
     }
 
     void Move(Vector3 direction)
@@ -216,6 +217,7 @@ class ArtsyPlayerBrain : MonoBehaviour
                 for (int i = 0; i < headParts.Count; i++)
                 {
                     headParts[i].SetActive(i == partNumber);
+                    head = ClassList[partNumber];
                 }
                 break;
             case 2:
@@ -223,6 +225,7 @@ class ArtsyPlayerBrain : MonoBehaviour
                 for (int i = 0; i < torsoParts.Count; i++)
                 {
                     torsoParts[i].SetActive(i == partNumber);
+                    torso = ClassList[partNumber];
                 }
                 break;
             case 3:
@@ -230,6 +233,7 @@ class ArtsyPlayerBrain : MonoBehaviour
                 for (int i = 0; i < headParts.Count; i++)
                 {
                     armsParts[i].SetActive(i == partNumber);
+                    arms = ClassList[partNumber];
                 }
                 break;
             case 4:
@@ -237,6 +241,7 @@ class ArtsyPlayerBrain : MonoBehaviour
                 for (int i = 0; i < headParts.Count; i++)
                 {
                     legsParts[i].SetActive(i == partNumber);
+                    legs = ClassList[partNumber];
                 }
                 break;
         }

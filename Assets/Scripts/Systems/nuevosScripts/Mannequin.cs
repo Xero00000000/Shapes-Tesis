@@ -52,24 +52,28 @@ public class Mannequin : MonoBehaviour
                 for (int i = 0; i < headParts.Count; i++)
                 {
                     headParts[i].SetActive(i == partNumber);
+                    //currentHead = partNumber;
                 }
                 break;
             case 2:
                 for (int i = 0; i < torsoParts.Count; i++)
                 {
                     torsoParts[i].SetActive(i == partNumber);
+                    //currentTorso = partNumber;
                 }
                 break;
             case 3:
                 for (int i = 0; i < armsParts.Count; i++)
                 {
                     armsParts[i].SetActive(i == partNumber);
+                    //currentArms = partNumber;
                 }
                 break;
             case 4:
                 for (int i = 0; i < legsParts.Count; i++)
                 {
                     legsParts[i].SetActive(i == partNumber);
+                    //currentLegs = partNumber;
                 }
                 break;
         }
