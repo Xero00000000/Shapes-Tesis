@@ -10,6 +10,8 @@ public class CameraFollow : MonoBehaviour
     [Header("Suavizado")]
     [SerializeField] private float smoothSpeed = 5f;
 
+    public bool combatAarea = false;
+
     void LateUpdate()
     {
         if (target == null) return;

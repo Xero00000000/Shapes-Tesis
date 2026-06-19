@@ -1925,6 +1925,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8414149933117442275, guid: 395c8e5af51a8a54dafc21fbc81f8cb1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 991545962}
+    - targetCorrespondingSourceObject: {fileID: 8414149933117442275, guid: 395c8e5af51a8a54dafc21fbc81f8cb1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 991545963}
   m_SourcePrefab: {fileID: 100100000, guid: 395c8e5af51a8a54dafc21fbc81f8cb1, type: 3}
 --- !u!1001 &121238687
 PrefabInstance:
@@ -10094,6 +10097,7 @@ MonoBehaviour:
   target: {fileID: 991545953}
   positionOffset: {x: 0, y: 10, z: -8}
   smoothSpeed: 13.3
+  combatAarea: 0
 --- !u!1 &283344441
 GameObject:
   m_ObjectHideFlags: 0
@@ -21397,7 +21401,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 392b6f5d29b6d8645bd0735ac9701e40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetingManager: {fileID: 0}
+  targetingManager: {fileID: 991545962}
   input: {fileID: 11400000, guid: dd5e5d88d5e449048911853bea5604aa, type: 2}
   moveSpeed: 17.5
   playerModel: {fileID: 991545953}
@@ -21437,6 +21441,11 @@ MonoBehaviour:
   torso: {fileID: 0}
   arms: {fileID: 0}
   legs: {fileID: 0}
+  placeholder1: {fileID: 11400000, guid: 6fad6d4739df15441a8dc26209ebba9b, type: 2}
+  placeholder2: {fileID: 11400000, guid: f25224fa2bff8b542aa5303529760284, type: 2}
+  mage: {fileID: 11400000, guid: eab233cde5383314d9083c961ab146da, type: 2}
+  knight: {fileID: 11400000, guid: 9f3d866d0c21c4b499bc9b9dd2136ace, type: 2}
+  ranger: {fileID: 11400000, guid: 51fe59a302969d14394a8eca91abf537, type: 2}
   combatMode: 0
 --- !u!135 &991545956
 SphereCollider:
@@ -21526,6 +21535,19 @@ MonoBehaviour:
   mouseWorldPosition: {x: 0, y: 0, z: 0}
   lookRotation: {x: 0, y: 0, z: 0, w: 0}
   isTargetting: 0
+--- !u!114 &991545963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 991545948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19308aeb85bdf0459e8f6b175cb500c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 10
 --- !u!1 &1011874084
 GameObject:
   m_ObjectHideFlags: 0
@@ -44729,8 +44751,8 @@ SceneRoots:
   - {fileID: 379595740}
   - {fileID: 1766176410}
   - {fileID: 140435223}
-  - {fileID: 123419843}
   - {fileID: 1983659210}
+  - {fileID: 123419843}
   - {fileID: 543450653609903947}
   - {fileID: 540092912}
   - {fileID: 188538189}

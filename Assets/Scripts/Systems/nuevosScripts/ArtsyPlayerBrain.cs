@@ -19,6 +19,7 @@ class ArtsyPlayerBrain : MonoBehaviour
     [SerializeField] float moveSpeed;
     [SerializeField] Transform playerModel;
     [SerializeField] Camera mainCamera;
+    CameraFollow cameraScript;
     Vector3 mouseWorldPosition;
     public Vector3 GetMovementVelocity() => moveInput;
     [SerializeField] private LayerMask floorLayer;
@@ -37,13 +38,17 @@ class ArtsyPlayerBrain : MonoBehaviour
     public List<GameObject> armsParts;
     public List<GameObject> legsParts;
 
+    [Header("CurrentPartAbilities")]
     [SerializeField] ClassData head;
     [SerializeField] ClassData torso;
     [SerializeField] ClassData arms;
     [SerializeField] ClassData legs;
     //[SerializeField] ClassData weapon;
 
-    public bool combatMode;
+    [Header("AllAbilities")]
+    [SerializeField] List<ClassData> ClassList;
+
+    public bool combatMode = false;
 
 
 
@@ -65,6 +70,10 @@ class ArtsyPlayerBrain : MonoBehaviour
         {
             legsParts[i].SetActive(i == currentLegs);
         }
+        head = ClassList[currentHead];
+        torso = ClassList[currentTorso];
+        arms = ClassList[currentArms];
+        legs = ClassList[currentLegs];
 
         input.Move += direction => moveInput = direction;
 
@@ -143,6 +152,8 @@ class ArtsyPlayerBrain : MonoBehaviour
 
 
         input.EnablePlayerActions();
+
+        cameraScript = mainCamera.GetComponent<CameraFollow>();
     }
 
     //tambien temporal
@@ -164,6 +175,20 @@ class ArtsyPlayerBrain : MonoBehaviour
             }
         }
         Move(CalculateMovementDirection());
+
+        if (cameraScript.combatAarea == true)
+        {
+            combatMode = true;
+        }
+        else
+        {
+            combatMode = false;
+        }
+
+        head = ClassList[currentHead];
+        torso = ClassList[currentTorso];
+        arms = ClassList[currentArms];
+        legs = ClassList[currentLegs];
     }
 
     void Move(Vector3 direction)

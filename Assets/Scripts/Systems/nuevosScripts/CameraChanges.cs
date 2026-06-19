@@ -20,15 +20,23 @@ public class CameraChanges : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Camera.positionOffset.x = xValueIn;
-        Camera.positionOffset.y = yValueIn;
-        Camera.positionOffset.z = zValueIn;
+        if (other.CompareTag("Player"))
+        {
+            Camera.positionOffset.x = xValueIn;
+            Camera.positionOffset.y = yValueIn;
+            Camera.positionOffset.z = zValueIn;
+            Camera.combatAarea = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        Camera.positionOffset.x = xValueOut;
-        Camera.positionOffset.y = yValueOut;
-        Camera.positionOffset.z = zValueOut;
+        if (other.CompareTag("Player"))
+        {
+            Camera.positionOffset.x = xValueOut;
+            Camera.positionOffset.y = yValueOut;
+            Camera.positionOffset.z = zValueOut;
+            Camera.combatAarea = false;
+        }
     }
 }

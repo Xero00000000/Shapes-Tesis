@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afe9acbdaafe3684bb1d2ed61874e2d6, type: 3}
+  m_Name: Caballero
+  m_EditorClassIdentifier: 
+  label: Caballero
+  passiveAbility: {fileID: 0}
+  headAbility: {fileID: 0}
+  armsAbility: {fileID: 0}
+  torsoAbility: {fileID: 0}
+  legsAbility: {fileID: 0}
+  primaryAttack: {fileID: 0}
+  secondaryAttack: {fileID: 0}
+  hpModifier: 0
+  energy: 0
+  physicalDefense: 0
+  magicalDefense: 0
+  speed: 0
+  physicalAttack: 0
+  magicalAttack: 0
+  Dexterity: 0
+  classHead: {fileID: 0}
+  classTorso: {fileID: 0}
+  classRightArm: {fileID: 0}
+  classLeftArm: {fileID: 0}
+  classRightLeg: {fileID: 0}
+  classLeftLeg: {fileID: 0}
