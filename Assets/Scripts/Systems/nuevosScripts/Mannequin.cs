@@ -22,6 +22,8 @@ public class Mannequin : MonoBehaviour
     public List<GameObject> armsParts;
     public List<GameObject> legsParts;
 
+    [SerializeField] private Color targetColor = Color.yellow;
+
     public void Start()
     {
         for (int i = 0; i < headParts.Count; i++)
@@ -70,6 +72,30 @@ public class Mannequin : MonoBehaviour
                     legsParts[i].SetActive(i == partNumber);
                 }
                 break;
+        }
+    }
+
+    public void Highlight()
+    {
+        // Find every Renderer component in this object and its children
+        Renderer[] childRenderers = GetComponentsInChildren<Renderer>();
+
+        foreach (Renderer rend in childRenderers)
+        {
+            // Modifying .material automatically instances it so it won't alter your project assets
+            rend.material.color = targetColor;
+        }
+    }
+
+    public void UnHighlight()
+    {
+        // Find every Renderer component in this object and its children
+        Renderer[] childRenderers = GetComponentsInChildren<Renderer>();
+
+        foreach (Renderer rend in childRenderers)
+        {
+            // Modifying .material automatically instances it so it won't alter your project assets
+            rend.material.color = Color.white;
         }
     }
 }

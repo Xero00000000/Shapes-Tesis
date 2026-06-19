@@ -9,8 +9,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 
-public class ArtsyPlayerBrain : MonoBehaviour
+[RequireComponent(typeof(TargetingManager))]
+class ArtsyPlayerBrain : MonoBehaviour
 {
+    [SerializeField] TargetingManager targetingManager;
     [SerializeField] InputReader input;
     bool isUsingAbility = false;
     Vector2 moveInput;
@@ -35,6 +37,16 @@ public class ArtsyPlayerBrain : MonoBehaviour
     public List<GameObject> armsParts;
     public List<GameObject> legsParts;
 
+    [SerializeField] ClassData head;
+    [SerializeField] ClassData torso;
+    [SerializeField] ClassData arms;
+    [SerializeField] ClassData legs;
+    //[SerializeField] ClassData weapon;
+
+    public bool combatMode;
+
+
+
     public void Start()
     {
         for (int i = 0; i < headParts.Count; i++)
@@ -58,33 +70,73 @@ public class ArtsyPlayerBrain : MonoBehaviour
 
         input.UtilityAbility += IsUtilityAbilityPressed =>
         {
-            if (mannequin != null)
+            if (combatMode != true)
             {
-                SwapPart(1, mannequin.currentHead);
+                if (mannequin != null)
+                {
+                    SwapPart(1, mannequin.currentHead);
+                }
+            }
+            else
+            {
+                if (IsUtilityAbilityPressed && isUsingAbility == false && targetingManager.isTargetting == false)
+                {
+                    Cast(head, 1);
+                }
             }
         };
 
         input.DefensiveAbility += IsDefensiveAbilityPressed =>
         {
-            if (mannequin != null)
+            if (combatMode != true)
             {
-                SwapPart(2, mannequin.currentTorso);
+                if (mannequin != null)
+                {
+                    SwapPart(2, mannequin.currentTorso);
+                }
+            }
+            else
+            {
+                if (IsDefensiveAbilityPressed && isUsingAbility == false && targetingManager.isTargetting == false)
+                {
+                    Cast(torso, 2);
+                }
             }
             
         };
         input.OfensiveAbility += IsOfensiveAbilityPressed =>
         {
-            if (mannequin != null)
+            if (combatMode != true)
             {
-                SwapPart(3, mannequin.currentArms);
+                if (mannequin != null)
+                {
+                    SwapPart(3, mannequin.currentArms);
+                }
+            }
+            else
+            {
+                if (IsOfensiveAbilityPressed && isUsingAbility == false && targetingManager.isTargetting == false)
+                {
+                    Cast(arms, 3);
+                }
             }
             
         };
         input.MoveAbility += IsMoveAbilityPressed =>
         {
-            if (mannequin != null)
+            if (combatMode != true)
             {
-                SwapPart(4, mannequin.currentLegs);
+                if (mannequin != null)
+                {
+                    SwapPart(4, mannequin.currentLegs);
+                }
+            }
+            else
+            {
+                if (IsMoveAbilityPressed && isUsingAbility == false && targetingManager.isTargetting == false)
+                {
+                    Cast(legs, 4);
+                }
             }
             
         };
@@ -170,7 +222,12 @@ public class ArtsyPlayerBrain : MonoBehaviour
 
         if (other.CompareTag("Mannequin"))
         {
+            if (mannequin != null)
+            {
+                mannequin.UnHighlight();
+            }
             mannequin = other.GetComponent<Mannequin>();
+            mannequin.Highlight();
         }
     }
 
@@ -179,7 +236,52 @@ public class ArtsyPlayerBrain : MonoBehaviour
 
         if (other.CompareTag("Mannequin") && mannequin == other.GetComponent<Mannequin>())
         {
+            mannequin.UnHighlight();
             mannequin = null;
         }
+    }
+
+    public void Cast(ClassData classAbility, int partAbility)
+    {
+        AbilityData ability = null;
+
+        switch (partAbility)
+        {
+            case 1: ability = classAbility.headAbility; break;
+            case 2: ability = classAbility.torsoAbility; break;
+            case 3: ability = classAbility.armsAbility; break;
+            case 4: ability = classAbility.legsAbility; break;
+            case 5: ability = classAbility.primaryAttack; break;
+            case 6: ability = classAbility.secondaryAttack; break;
+        }
+
+        if (ability == null)
+        {
+            return;
+        }
+
+        //float castTime = ability.castTime;
+
+        if (ability.castTime == 0)
+        {
+            ability.Target(targetingManager, this.gameObject, targetingManager.mouseWorldPosition);
+            return;
+        }
+
+        if (castTimer != null)
+        {
+            try { castTimer.Stop(); } catch { }
+            castTimer = null;
+        }
+
+        castTimer = new CountdownTimer(ability.castTime);
+        castTimer.OnTimerStart = () => isUsingAbility = true;
+        castTimer.Start();
+        castTimer.OnTimerStop = () =>
+        {
+            isUsingAbility = false;
+            ability.Target(targetingManager, this.gameObject, targetingManager.mouseWorldPosition);
+        };
+
     }
 }
