@@ -25,6 +25,7 @@ class ArtsyPlayerBrain : MonoBehaviour
     [SerializeField] private LayerMask floorLayer;
 
     CountdownTimer castTimer;
+    CountdownTimer abilityCooldownTimer;
 
     private Mannequin mannequin;
 
@@ -50,6 +51,8 @@ class ArtsyPlayerBrain : MonoBehaviour
 
     public bool combatMode = false;
 
+    [SerializeField] SwapViewer swapViewer;
+
 
 
     public void Start()
@@ -57,18 +60,26 @@ class ArtsyPlayerBrain : MonoBehaviour
         for (int i = 0; i < headParts.Count; i++)
         {
             headParts[i].SetActive(i == currentHead);
+            swapViewer.playerHeadParts[i].SetActive(i == currentHead);
+            swapViewer.mannequinHeadParts[i].SetActive(false);
         }
         for (int i = 0; i < torsoParts.Count; i++)
         {
             torsoParts[i].SetActive(i == currentTorso);
+            swapViewer.playerTorsoParts[i].SetActive(i == currentTorso);
+            swapViewer.mannequinTorsoParts[i].SetActive(false);
         }
         for (int i = 0; i < armsParts.Count; i++)
         {
             armsParts[i].SetActive(i == currentArms);
+            swapViewer.playerArmsParts[i].SetActive(i == currentArms);
+            swapViewer.mannequinArmsParts[i].SetActive(false);
         }
         for (int i = 0; i < legsParts.Count; i++)
         {
             legsParts[i].SetActive(i == currentLegs);
+            swapViewer.playerLegsParts[i].SetActive(i == currentLegs);
+            swapViewer.mannequinLegsParts[i].SetActive(false);
         }
         head = ClassList[currentHead];
         torso = ClassList[currentTorso];
@@ -81,9 +92,12 @@ class ArtsyPlayerBrain : MonoBehaviour
         {
             if (combatMode != true)
             {
-                if (mannequin != null)
+                if (IsUtilityAbilityPressed == true)
                 {
-                    SwapPart(1, mannequin.currentHead);
+                    if (mannequin != null)
+                    {
+                        SwapPart(1, mannequin.currentHead);
+                    }
                 }
             }
             else
@@ -99,9 +113,12 @@ class ArtsyPlayerBrain : MonoBehaviour
         {
             if (combatMode != true)
             {
-                if (mannequin != null)
+                if (IsDefensiveAbilityPressed == true)
                 {
-                    SwapPart(2, mannequin.currentTorso);
+                    if (mannequin != null)
+                    {
+                        SwapPart(2, mannequin.currentTorso);
+                    }
                 }
             }
             else
@@ -117,9 +134,12 @@ class ArtsyPlayerBrain : MonoBehaviour
         {
             if (combatMode != true)
             {
-                if (mannequin != null)
+                if (IsOfensiveAbilityPressed == true)
                 {
-                    SwapPart(3, mannequin.currentArms);
+                    if (mannequin != null)
+                    {
+                        SwapPart(3, mannequin.currentArms);
+                    }
                 }
             }
             else
@@ -135,9 +155,12 @@ class ArtsyPlayerBrain : MonoBehaviour
         {
             if (combatMode != true)
             {
-                if (mannequin != null)
+                if (IsMoveAbilityPressed == true)
                 {
-                    SwapPart(4, mannequin.currentLegs);
+                    if (mannequin != null)
+                    {
+                        SwapPart(4, mannequin.currentLegs);
+                    }
                 }
             }
             else
@@ -148,6 +171,46 @@ class ArtsyPlayerBrain : MonoBehaviour
                 }
             }
             
+        };
+        input.PrimaryAttack += IsPrimaryAttackPressed =>
+        {
+            if (combatMode != true)
+            {/*
+                if (IsPrimaryAttackPressed == true)
+                {
+                    if (mannequin != null)
+                    {
+                        SwapPart(4, mannequin.currentLegs);
+                    }
+                }*/
+            }
+            else
+            {
+                if (IsPrimaryAttackPressed && isUsingAbility == false && targetingManager.isTargetting == false)
+                {
+                    Cast(arms, 5);
+                }
+            }
+        };
+        input.SecondaryAttack += IsSecondaryAttackPressed =>
+        {
+            if (combatMode != true)
+            {/*
+                if (IsPrimaryAttackPressed == true)
+                {
+                    if (mannequin != null)
+                    {
+                        SwapPart(4, mannequin.currentLegs);
+                    }
+                }*/
+            }
+            else
+            {
+                if (IsSecondaryAttackPressed && isUsingAbility == false && targetingManager.isTargetting == false)
+                {
+                    Cast(arms, 6);
+                }
+            }
         };
 
 
@@ -172,7 +235,9 @@ class ArtsyPlayerBrain : MonoBehaviour
             {
                 Quaternion lookRotation = Quaternion.LookRotation(direction);
                 transform.rotation = Quaternion.Euler(0f, lookRotation.eulerAngles.y, 0f);
+                targetingManager.lookRotation = Quaternion.LookRotation(direction);
             }
+            targetingManager.mouseWorldPosition = mouseWorldPosition;
         }
         Move(CalculateMovementDirection());
 
@@ -184,12 +249,6 @@ class ArtsyPlayerBrain : MonoBehaviour
         {
             combatMode = false;
         }
-        /*
-        head = ClassList[currentHead];
-        torso = ClassList[currentTorso];
-        arms = ClassList[currentArms];
-        legs = ClassList[currentLegs];
-        */
     }
 
     void Move(Vector3 direction)
@@ -218,6 +277,9 @@ class ArtsyPlayerBrain : MonoBehaviour
                 {
                     headParts[i].SetActive(i == partNumber);
                     head = ClassList[partNumber];
+                    currentHead = partNumber;
+                    swapViewer.playerHeadParts[i].SetActive(i == currentHead);
+                    swapViewer.mannequinHeadParts[i].SetActive(i == mannequin.currentHead);
                 }
                 break;
             case 2:
@@ -226,22 +288,31 @@ class ArtsyPlayerBrain : MonoBehaviour
                 {
                     torsoParts[i].SetActive(i == partNumber);
                     torso = ClassList[partNumber];
+                    currentTorso = partNumber;
+                    swapViewer.playerTorsoParts[i].SetActive(i == currentTorso);
+                    swapViewer.mannequinTorsoParts[i].SetActive(i == mannequin.currentTorso);
                 }
                 break;
             case 3:
                 mannequin.SwapPart(partToSwap, currentArms);
-                for (int i = 0; i < headParts.Count; i++)
+                for (int i = 0; i < armsParts.Count; i++)
                 {
                     armsParts[i].SetActive(i == partNumber);
                     arms = ClassList[partNumber];
+                    currentArms = partNumber;
+                    swapViewer.playerArmsParts[i].SetActive(i == currentArms);
+                    swapViewer.mannequinArmsParts[i].SetActive(i == mannequin.currentArms);
                 }
                 break;
             case 4:
                 mannequin.SwapPart(partToSwap, currentLegs);
-                for (int i = 0; i < headParts.Count; i++)
+                for (int i = 0; i < legsParts.Count; i++)
                 {
                     legsParts[i].SetActive(i == partNumber);
                     legs = ClassList[partNumber];
+                    currentLegs = partNumber;
+                    swapViewer.playerLegsParts[i].SetActive(i == currentLegs);
+                    swapViewer.mannequinLegsParts[i].SetActive(i == mannequin.currentLegs);
                 }
                 break;
         }
@@ -258,6 +329,14 @@ class ArtsyPlayerBrain : MonoBehaviour
             }
             mannequin = other.GetComponent<Mannequin>();
             mannequin.Highlight();
+
+            for (int i = 0; i < headParts.Count; i++)
+            {
+                swapViewer.mannequinHeadParts[i].SetActive(i == mannequin.currentHead);
+                swapViewer.mannequinTorsoParts[i].SetActive(i == mannequin.currentTorso);
+                swapViewer.mannequinArmsParts[i].SetActive(i == mannequin.currentArms);
+                swapViewer.mannequinLegsParts[i].SetActive(i == mannequin.currentLegs);
+            }
         }
     }
 
@@ -268,11 +347,20 @@ class ArtsyPlayerBrain : MonoBehaviour
         {
             mannequin.UnHighlight();
             mannequin = null;
+
+            for (int i = 0; i < headParts.Count; i++)
+            {
+                swapViewer.mannequinHeadParts[i].SetActive(false);
+                swapViewer.mannequinTorsoParts[i].SetActive(false);
+                swapViewer.mannequinArmsParts[i].SetActive(false);
+                swapViewer.mannequinLegsParts[i].SetActive(false);
+            }
         }
     }
 
     public void Cast(ClassData classAbility, int partAbility)
     {
+
         AbilityData ability = null;
 
         switch (partAbility)

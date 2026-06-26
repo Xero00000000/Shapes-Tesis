@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: FireBolt
   m_EditorClassIdentifier: 
   label: FireBolt
-  castTime: 1
+  castTime: 0.1
+  cooldownTime: 0.5
   castSoundEffect: {fileID: 0}
   castVisualEffect: {fileID: 0}
   runningVisualEffect: {fileID: 0}

@@ -19,7 +19,7 @@ MonoBehaviour:
   torsoAbility: {fileID: 11400000, guid: 423841a6bfee73c4cbfddb1a0d5449e7, type: 2}
   legsAbility: {fileID: 11400000, guid: 9645bd020af811540ab1b3ab586eacc9, type: 2}
   primaryAttack: {fileID: 11400000, guid: 5d8ca38867014fa478ad92c6ca7d01cf, type: 2}
-  secondaryAttack: {fileID: 11400000, guid: b588d47270031414eacf13a762e6a44d, type: 2}
+  secondaryAttack: {fileID: 11400000, guid: ba4e81344986ed646b5472e800f2043f, type: 2}
   hpModifier: 5
   energy: 5
   physicalDefense: 5

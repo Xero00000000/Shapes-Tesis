@@ -11,6 +11,7 @@ class AbilityData : ScriptableObject
     public string label;
 
     public float castTime;
+    public float cooldownTime;
     [SerializeField] AudioClip castSoundEffect;
     [SerializeField] GameObject castVisualEffect;
     [SerializeField] GameObject runningVisualEffect;
