@@ -40,5 +40,5 @@ MonoBehaviour:
       type: {class: ProjectileTargeting, ns: , asm: Assembly-CSharp}
       data:
         projectilePrefab: {fileID: 6614440148226581386, guid: 514762b7f4bf54940b2d46891958b609, type: 3}
-        projectileSpeed: 3
+        projectileSpeed: 19.83
         projectileLifetime: 7

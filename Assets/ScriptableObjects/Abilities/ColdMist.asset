@@ -35,7 +35,7 @@ MonoBehaviour:
           serializedVersion: 2
           m_Bits: 8
         aoeLifetime: 6
-        heightOffset: 3.7
+        heightOffset: 3.16
     - rid: 8177744243638403144
       type: {class: InstantDamageFactory, ns: , asm: Assembly-CSharp}
       data:
