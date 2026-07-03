@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   label: IceWall
   castTime: 0
+  cooldownTime: 0
   castSoundEffect: {fileID: 0}
   castVisualEffect: {fileID: 0}
   runningVisualEffect: {fileID: 0}
@@ -32,7 +33,7 @@ MonoBehaviour:
       type: {class: ConjureAOETargeting, ns: , asm: Assembly-CSharp}
       data:
         conjurePrefab: {fileID: 5899332760189748542, guid: 6d20599b351073448a870ee8aa68981a, type: 3}
-        previewPrefab: {fileID: 5899332760189748542, guid: 6d20599b351073448a870ee8aa68981a, type: 3}
+        previewPrefab: {fileID: 5899332760189748542, guid: b3eebe24ae9cbf84ab47e09d400c971e, type: 3}
         aoeRadius: 3
         groundLayerMask:
           serializedVersion: 2

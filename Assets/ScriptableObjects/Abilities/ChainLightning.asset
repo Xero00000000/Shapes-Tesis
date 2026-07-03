@@ -13,15 +13,27 @@ MonoBehaviour:
   m_Name: ChainLightning
   m_EditorClassIdentifier: 
   label: ChainLightning
-  castTime: 0
+  castTime: 0.2
+  cooldownTime: 4
   castSoundEffect: {fileID: 0}
   castVisualEffect: {fileID: 0}
   runningVisualEffect: {fileID: 0}
-  effects: []
+  effects:
+  - rid: 8177744243638403154
   targetingStrategy:
-    rid: -2
+    rid: 8177744243638403151
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 8177744243638403151
+      type: {class: ProjectileTargeting, ns: , asm: Assembly-CSharp}
+      data:
+        projectilePrefab: {fileID: 652667763284713512, guid: 5865568d92b175440b3afe77588efc23, type: 3}
+        projectileSpeed: 0
+        projectileLifetime: 4
+    - rid: 8177744243638403154
+      type: {class: DamageOverTimeFactory, ns: , asm: Assembly-CSharp}
+      data:
+        duration: 4
+        tickInterval: 1
+        damagePerTick: 1

@@ -110,3 +110,49 @@ class TeleportFactory : IEffectFactory<IDamageable, GameObject, Vector3>
         return new Teleport {  };
     }
 }
+
+struct Run : IAbilityEffect<IDamageable, GameObject, Vector3>
+{
+
+    public event Action<IAbilityEffect<IDamageable, GameObject, Vector3>> OnCompleted;
+
+    public void Apply(IDamageable target, GameObject caster, Vector3 point)
+    {
+        //caster.transform.position = point;
+        OnCompleted?.Invoke(this);
+    }
+    public void Cancel()
+    {
+        OnCompleted?.Invoke(this);
+    }
+}
+class RunFactory : IEffectFactory<IDamageable, GameObject, Vector3>
+{
+    public IAbilityEffect<IDamageable, GameObject, Vector3> Create()
+    {
+        return new Run { };
+    }
+}
+
+struct Buff : IAbilityEffect<IDamageable, GameObject, Vector3>
+{
+
+    public event Action<IAbilityEffect<IDamageable, GameObject, Vector3>> OnCompleted;
+
+    public void Apply(IDamageable target, GameObject caster, Vector3 point)
+    {
+        //caster.transform.position = point;
+        OnCompleted?.Invoke(this);
+    }
+    public void Cancel()
+    {
+        OnCompleted?.Invoke(this);
+    }
+}
+class Buffactory : IEffectFactory<IDamageable, GameObject, Vector3>
+{
+    public IAbilityEffect<IDamageable, GameObject, Vector3> Create()
+    {
+        return new Run { };
+    }
+}
