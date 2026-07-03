@@ -18,11 +18,16 @@ MonoBehaviour:
   castSoundEffect: {fileID: 0}
   castVisualEffect: {fileID: 0}
   runningVisualEffect: {fileID: 0}
-  effects: []
+  effects:
+  - rid: 8177744243638403175
   targetingStrategy:
-    rid: -2
+    rid: 8177744243638403174
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 8177744243638403174
+      type: {class: SelfTargeting, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8177744243638403175
+      type: {class: BuffFactory, ns: , asm: Assembly-CSharp}
+      data: 

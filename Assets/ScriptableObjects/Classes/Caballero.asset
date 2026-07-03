@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   label: Caballero
   passiveAbility: {fileID: 0}
-  headAbility: {fileID: 0}
-  armsAbility: {fileID: 0}
-  torsoAbility: {fileID: 0}
-  legsAbility: {fileID: 0}
-  primaryAttack: {fileID: 0}
-  secondaryAttack: {fileID: 0}
+  headAbility: {fileID: 11400000, guid: a1be92229e910c540a7c1cb12dedc7ff, type: 2}
+  armsAbility: {fileID: 11400000, guid: 182965a72fea3dc45a7dac3158576e42, type: 2}
+  torsoAbility: {fileID: 11400000, guid: 117dbf8d30519924395549067735a335, type: 2}
+  legsAbility: {fileID: 11400000, guid: 9d50b41894f83044bb24834bb25614cd, type: 2}
+  primaryAttack: {fileID: 11400000, guid: bec99a0299967d04c93c86833379f188, type: 2}
+  secondaryAttack: {fileID: 11400000, guid: ef3455c1e094802458b5a7e0db97c76e, type: 2}
   hpModifier: 0
   energy: 0
   physicalDefense: 0

@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   label: Ranger
   passiveAbility: {fileID: 0}
-  headAbility: {fileID: 0}
-  armsAbility: {fileID: 0}
-  torsoAbility: {fileID: 0}
-  legsAbility: {fileID: 0}
-  primaryAttack: {fileID: 0}
-  secondaryAttack: {fileID: 0}
+  headAbility: {fileID: 11400000, guid: 4c1de059bf899724884e2e9b5abd3486, type: 2}
+  armsAbility: {fileID: 11400000, guid: 20cf66fcc0d91294fa7938d3d8b823e1, type: 2}
+  torsoAbility: {fileID: 11400000, guid: 34bb69cf9f8232a43966b2a8d907e259, type: 2}
+  legsAbility: {fileID: 11400000, guid: d09e3c29e71a2084a99fb6eeb4a275c5, type: 2}
+  primaryAttack: {fileID: 11400000, guid: 97ef4d1469d3a5c4682202f3fc831066, type: 2}
+  secondaryAttack: {fileID: 11400000, guid: 8442bae725f89b74bb09d0d42ac41584, type: 2}
   hpModifier: 0
   energy: 0
   physicalDefense: 0

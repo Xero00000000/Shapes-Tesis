@@ -149,7 +149,30 @@ struct Buff : IAbilityEffect<IDamageable, GameObject, Vector3>
         OnCompleted?.Invoke(this);
     }
 }
-class Buffactory : IEffectFactory<IDamageable, GameObject, Vector3>
+class BuffFactory : IEffectFactory<IDamageable, GameObject, Vector3>
+{
+    public IAbilityEffect<IDamageable, GameObject, Vector3> Create()
+    {
+        return new Run { };
+    }
+}
+
+struct Dash : IAbilityEffect<IDamageable, GameObject, Vector3>
+{
+
+    public event Action<IAbilityEffect<IDamageable, GameObject, Vector3>> OnCompleted;
+
+    public void Apply(IDamageable target, GameObject caster, Vector3 point)
+    {
+        //caster.transform.position = point;
+        OnCompleted?.Invoke(this);
+    }
+    public void Cancel()
+    {
+        OnCompleted?.Invoke(this);
+    }
+}
+class DashFactory : IEffectFactory<IDamageable, GameObject, Vector3>
 {
     public IAbilityEffect<IDamageable, GameObject, Vector3> Create()
     {

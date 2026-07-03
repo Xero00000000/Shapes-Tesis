@@ -13,16 +13,30 @@ MonoBehaviour:
   m_Name: Barrage
   m_EditorClassIdentifier: 
   label: Barrage
-  castTime: 0
+  castTime: 0.1
   cooldownTime: 0
   castSoundEffect: {fileID: 0}
   castVisualEffect: {fileID: 0}
   runningVisualEffect: {fileID: 0}
-  effects: []
+  effects:
+  - rid: 8177744243638403163
   targetingStrategy:
-    rid: -2
+    rid: 8177744243638403162
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 8177744243638403162
+      type: {class: ConjureAOETargeting, ns: , asm: Assembly-CSharp}
+      data:
+        conjurePrefab: {fileID: 6459046976999137596, guid: d24ed050f19eb484e976d74b413af89e, type: 3}
+        previewPrefab: {fileID: 6459046976999137596, guid: e37d84319ad4daa44bf4a9a189adcca3, type: 3}
+        aoeRadius: 5
+        groundLayerMask:
+          serializedVersion: 2
+          m_Bits: 8
+        aoeLifetime: 3
+        heightOffset: 3.7
+    - rid: 8177744243638403163
+      type: {class: InstantDamageFactory, ns: , asm: Assembly-CSharp}
+      data:
+        damageValue: 1

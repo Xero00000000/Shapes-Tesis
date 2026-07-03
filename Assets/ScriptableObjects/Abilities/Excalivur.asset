@@ -18,11 +18,20 @@ MonoBehaviour:
   castSoundEffect: {fileID: 0}
   castVisualEffect: {fileID: 0}
   runningVisualEffect: {fileID: 0}
-  effects: []
+  effects:
+  - rid: 8177744243638403179
   targetingStrategy:
-    rid: -2
+    rid: 8177744243638403178
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 8177744243638403178
+      type: {class: ProjectileTargeting, ns: , asm: Assembly-CSharp}
+      data:
+        projectilePrefab: {fileID: 0}
+        projectileSpeed: 0
+        projectileLifetime: 1
+    - rid: 8177744243638403179
+      type: {class: InstantDamageFactory, ns: , asm: Assembly-CSharp}
+      data:
+        damageValue: 5
