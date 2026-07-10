@@ -14,19 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   label: LightningStep
   castTime: 0
+  cooldownTime: 0
   castSoundEffect: {fileID: 0}
   castVisualEffect: {fileID: 0}
-  runningVisualEffect: {fileID: 0}
+  runningVisualEffect: {fileID: 2061834685547196021, guid: 270b97f8594d07d4b8788c132c61dd22, type: 3}
   effects:
-  - rid: 7265136773923078212
+  - rid: 8177744413870260296
   targetingStrategy:
     rid: 7265136773923078213
   references:
     version: 2
     RefIds:
-    - rid: 7265136773923078212
-      type: {class: TeleportFactory, ns: , asm: Assembly-CSharp}
-      data: 
     - rid: 7265136773923078213
       type: {class: SelfTargeting, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8177744413870260296
+      type: {class: BuffFactory, ns: , asm: Assembly-CSharp}
       data: 

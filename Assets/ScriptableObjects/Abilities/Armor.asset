@@ -16,8 +16,8 @@ MonoBehaviour:
   castTime: 0
   cooldownTime: 0
   castSoundEffect: {fileID: 0}
-  castVisualEffect: {fileID: 6910953744532969801, guid: 5aae12d3effc1264ca22caa6c1df8857, type: 3}
-  runningVisualEffect: {fileID: 0}
+  castVisualEffect: {fileID: 2957837357377090095, guid: ac36a4ebe00fabc4a867b9d1116ff5ff, type: 3}
+  runningVisualEffect: {fileID: 6910953744532969801, guid: 5aae12d3effc1264ca22caa6c1df8857, type: 3}
   effects:
   - rid: 8177744243638403172
   targetingStrategy:

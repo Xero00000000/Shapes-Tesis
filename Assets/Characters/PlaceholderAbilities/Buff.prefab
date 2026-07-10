@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5746409240025420077}
   - component: {fileID: 8112044435316239273}
   - component: {fileID: 898851880579878942}
-  - component: {fileID: 4830784632785450791}
+  - component: {fileID: -1591306439926032936}
   m_Layer: 7
   m_Name: Buff
   m_TagString: Untagged
@@ -111,7 +111,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4830784632785450791
+--- !u!114 &-1591306439926032936
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,3 +123,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d10288c50839244d88341c644f2d14c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lifeTime: 4
